@@ -12,7 +12,7 @@ Rought Scene and Story Outline :
 
 ![alt text](https://i.imgur.com/rhYTDXu.png)
 
-![alt text](https://i.imgur.com/Av4O8BX.png)
+![alt text](https://i.imgur.com/W1ZFAeb.png)
 
 ![alt text](https://i.imgur.com/KZAqXkX.png)
 
