@@ -9,12 +9,20 @@ public class Seek : SteeringBehaviour
     //public GameObject targetGameObject = null;
     public Vector3 target = Vector3.zero;
     Paths path;
+    public Transform _target;
+    private bool _followingPath = false;
  
 
     private void Start()
     {
-        path = GetComponent<Paths>();
-        target = path.NextWaypoint();
+        try {
+            _followingPath = true;
+            path = GetComponent<Paths>();
+            target = path.NextWaypoint();
+        } catch {
+            _followingPath = false;
+            target = _target.position;
+        }
     }
 
     public void OnDrawGizmos()
@@ -23,18 +31,18 @@ public class Seek : SteeringBehaviour
         {
             Gizmos.color = Color.cyan;
             
-            Gizmos.DrawLine(transform.position, target);
+            Gizmos.DrawLine(transform.position, _target.position);
         }
     }
     
     public override Vector3 Calculate()
     {
-        return boid.SeekForce(target);    
+        return boid.SeekForce(_target.position);    
     }
 
     public void Update()
     {
-        if (Vector3.Distance(transform.position, target) < 2)
+        if (_followingPath && Vector3.Distance(transform.position, target) < 2)
         {
             path.AdvanceToNext();
             target = path.NextWaypoint();

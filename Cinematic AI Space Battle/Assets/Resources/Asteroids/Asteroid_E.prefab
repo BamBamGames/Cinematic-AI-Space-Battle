@@ -10,6 +10,7 @@ GameObject:
   - component: {fileID: 415920}
   - component: {fileID: 3383324}
   - component: {fileID: 2332370}
+  - component: {fileID: 65573663876596456}
   m_Layer: 0
   m_Name: Asteroid_E
   m_TagString: Untagged
@@ -83,3 +84,15 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 173668}
   m_IsPrefabAsset: 1
+--- !u!65 &65573663876596456
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173668}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.01020751, y: 0.015462312, z: 0.015797347}
+  m_Center: {x: -0.0022458076, y: 0.00039472664, z: 0.0006858313}
