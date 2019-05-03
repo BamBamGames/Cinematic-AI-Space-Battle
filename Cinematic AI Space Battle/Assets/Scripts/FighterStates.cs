@@ -7,7 +7,20 @@ using UnityEngine;
 
 public class DecidingRole : State {
     public override void Enter() {
-        
+
+        Ship ship;
+
+        if ((ship = owner.GetComponent<Ship>()) is Figther) {
+            ship.GetComponent<StateMachine>().ChangeState(new FollowingLeader());
+        }
+
+        if (owner.GetComponent<Ship>() is Leader) {
+
+        }
+
+        if (owner.GetComponent<Ship>() is Commander) {
+
+        }
     }
     public override void Exit() {
      
@@ -25,12 +38,13 @@ public class FollowingLeader : State {
     public override void Enter() {
         Debug.Log("Entered Travelling State" + owner);
         //owner.GetComponent<Figther>().PickTargetBase();
-        owner.GetComponent<OffsetPersuit>().enabled = true;
+        owner.GetComponent<Arrive>().targetGameObject = owner.GetComponent<Figther>()._targetToFollow.gameObject;
+        owner.GetComponent<Arrive>().enabled = true;
     }
     public override void Exit() {
         Debug.Log("Entered Travelling State" + owner);
         //owner.GetComponent<Figther>().PickTargetBase();
-        owner.GetComponent<OffsetPersuit>().enabled = false;
+        owner.GetComponent<Arrive>().enabled = false;
     }
     public override void Think() {
         if (!owner.GetComponent<Figther>().LeaderAlive()) {
@@ -38,6 +52,39 @@ public class FollowingLeader : State {
         }
     }
 }
+
+public class Chasing : State {
+    public override void Enter() {
+        Debug.Log("Entered Travelling State" + owner);
+        //owner.GetComponent<Figther>().PickTargetBase();
+        owner.GetComponent<Seek>()._target = owner.GetComponent<Figther>()._targetToFollow.gameObject.transform;
+        owner.GetComponent<Seek>().enabled = true;
+    }
+    public override void Exit() {
+        Debug.Log("Entered Travelling State" + owner);
+        //owner.GetComponent<Figther>().PickTargetBase();
+        owner.GetComponent<Seek>().enabled = false;
+    }
+    public override void Think() {
+        
+    }
+}
+
+/// <summary>
+/// Trying to get away from enemy
+/// </summary>
+public class Evading : State {
+    public override void Enter() {
+        owner.GetComponent<Evasive>().enabled = true;
+    }
+    public override void Exit() {
+        owner.GetComponent<Evasive>().enabled = false;
+    }
+    public override void Think() {
+
+    }
+}
+
 
 
 /// <summary>
@@ -60,7 +107,7 @@ public class Regrouping : State {
 /// </summary>
 public class Engaging : State {
     public override void Enter() {
-
+        owner.GetComponent<Ship>().Targeting(); ;
     }
     public override void Exit() {
 
@@ -70,20 +117,6 @@ public class Engaging : State {
     }
 }
 
-/// <summary>
-/// Trying to get away from enemy
-/// </summary>
-public class Evading : State {
-    public override void Enter() {
-
-    }
-    public override void Exit() {
-
-    }
-    public override void Think() {
-
-    }
-}
 
 /// <summary>
 /// Coming back to base to refuel
@@ -148,7 +181,7 @@ public class SuicideMission : State {
 
     }
 }
-
+/*
 public class Travelling : State {
     //public StateMachine owner;
     public override void Enter() {
@@ -218,3 +251,4 @@ public class Retrieving : State {
         }
     }
 }
+*/

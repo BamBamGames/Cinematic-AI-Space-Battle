@@ -19,6 +19,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4593912216261426}
+  - component: {fileID: 114742375751869810}
+  - component: {fileID: 114848681388753052}
+  - component: {fileID: 114096978440185758}
+  - component: {fileID: 114231306860688932}
   m_Layer: 0
   m_Name: RedLeader3
   m_TagString: Untagged
@@ -114,3 +118,86 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1694899130132116}
   m_Mesh: {fileID: 4300000, guid: 66a1e53819dc0ac41a81ac98b679bd75, type: 3}
+--- !u!114 &114096978440185758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1234198579739934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5bcd6292fd08a4c83b8b99b689e7e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _life: 0
+  _armomr: 0
+  _fuel: 0
+  _primaryAmmo: 0
+  _secondaryAmmo: 0
+  _stateMachine: {fileID: 0}
+  _avgDistanceBetweenFollowers: 0
+--- !u!114 &114231306860688932
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1234198579739934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3836a7ca6e8a0ba48907871c823c6615, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 1
+  force: {x: 0, y: 0, z: 0}
+  boid: {fileID: 0}
+  scale: 10
+  forwardFeelerDepth: 20
+  sideFeelerDepth: 20
+  frontFeelerUpdatesPerSecond: 10
+  sideFeelerUpdatesPerSecond: 5
+  feelerRadius: 2
+  _secondsBeforeDirectionChange: 20
+  forceType: 5
+  mask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &114742375751869810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1234198579739934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d87d84b82bd25840b36a2bf130bb563, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: {x: 0, y: 0, z: 0}
+  acceleration: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  mass: 1
+  damping: 0.01
+  banking: 0.1
+  maxSpeed: 10
+  maxForce: 10
+  speed: 0
+--- !u!114 &114848681388753052
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1234198579739934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de747ec62f7e50346882743cbc1f971a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 0.5
+  force: {x: 0, y: 0, z: 0}
+  boid: {fileID: 0}
+  distance: 10
+  radius: 5
+  jitter: 100
+  evasiveType: 0
+  intervalInSecondsManuever: 10
+  _randomTimeSecsMax: 10

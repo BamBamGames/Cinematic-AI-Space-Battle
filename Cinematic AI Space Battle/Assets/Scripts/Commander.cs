@@ -20,5 +20,6 @@ public class Commander : Ship {
         _fuel = 1000f;
         _primaryAmmo = 500f;
         _secondaryAmmo = 500f;
+        _attackPowerMultiplier = 3f;
     }
 }

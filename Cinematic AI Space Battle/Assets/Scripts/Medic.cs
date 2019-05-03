@@ -20,6 +20,7 @@ public class Medic : Ship {
         _fuel = 400f;
         _primaryAmmo = 100f;
         _secondaryAmmo = 0f;
+        _attackPowerMultiplier = 1f;
     }
 
 }

@@ -19,6 +19,14 @@ public class Boid : MonoBehaviour
     public float maxSpeed = 5.0f;
     public float maxForce = 10.0f;
 
+    public float speed = 0;
+
+    Vector3 lastPosition = Vector3.zero;
+
+    private void FixedUpdate() {
+        speed = (transform.position - lastPosition).magnitude;
+        lastPosition = transform.position;
+    }
 
     // Use this for initialization
     void Start()
@@ -43,16 +51,18 @@ public class Boid : MonoBehaviour
         return desired - velocity;
     }
 
-    public Vector3 ArriveForce(Vector3 target, float slowingDistance = 15.0f)
+    public Vector3 ArriveForce(Vector3 target, float slowingDistance)
     {
         Vector3 toTarget = target - transform.position;
 
         float distance = toTarget.magnitude;
+        
         if (distance < 0.1f)
         {
             return Vector3.zero;
         }
-        float ramped = maxSpeed * (distance / slowingDistance);
+        
+        float ramped = maxSpeed * (distance);
 
         float clamped = Mathf.Min(ramped, maxSpeed);
         Vector3 desired = clamped * (toTarget / distance);

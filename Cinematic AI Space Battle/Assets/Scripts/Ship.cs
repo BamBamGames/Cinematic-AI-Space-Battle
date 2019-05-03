@@ -12,8 +12,16 @@ public abstract class Ship : MonoBehaviour {
     public float _fuel;
     public float _primaryAmmo;
     public float _secondaryAmmo;
+    public float _attackPowerMultiplier;
+
+    public float _maxSpeed = 10f;
+
+    public Transform _targetToFollow;
+
 
     public StateMachine _stateMachine;
+
+    public Team _team;
 
     // Use this for initialization
     void Start () {
@@ -43,8 +51,22 @@ public abstract class Ship : MonoBehaviour {
         }
     }
 
+
     /// <summary>
     /// Set life, armor, fuel, primaryAmmo and secondaryAmmo here
     /// </summary>
     protected abstract void SetShipStats();
+
+    public void SetTeam(Team team) {
+        _team = team;
+    }
+
+    public void Targeting() {
+
+        Vector3 targetDir = transform.position - transform.position;
+        float angleToPlayer = (Vector3.Angle(targetDir, transform.forward));
+
+        if (angleToPlayer >= -90 && angleToPlayer <= 90) // 180° FOV
+            Debug.Log("Player in sight!");
+    }
 }

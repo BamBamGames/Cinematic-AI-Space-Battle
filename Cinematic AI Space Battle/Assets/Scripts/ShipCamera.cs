@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PostProcessing;
+using UnityEngine.Rendering;
 
 public class ShipCamera : MonoBehaviour {
 
@@ -20,7 +22,8 @@ public class ShipCamera : MonoBehaviour {
         //physicalCam.transform.parent = target;
         physicalCam.transform.localRotation = target.rotation;
         physicalCam.fieldOfView = 80f;
-
+        PostProcessingBehaviour pp = go.AddComponent<PostProcessingBehaviour>();
+        pp.profile = CameraEffects.Instance.postProcessingProfile;
         camera._target = target;
         //camera._tragetPos = targetPos;
         camera._tragetPos = go.transform.position = target.transform.position - target.transform.forward * 7f;

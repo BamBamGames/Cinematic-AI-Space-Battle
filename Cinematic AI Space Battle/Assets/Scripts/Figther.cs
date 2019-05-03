@@ -6,6 +6,7 @@ public class Figther : Ship {
 
     private GameObject _leader;
     private GameObject _enemyTarget;
+    public Fleet _fleet;
 	
 	// Update is called once per frame
 	void Update () {
@@ -35,7 +36,9 @@ public class Figther : Ship {
     public void StopSearchForEnemy() {
     }
 
-
+    public void SetFormationTransform(Transform formPos) {
+        _targetToFollow = formPos;
+    }
 
     protected override void SetShipStats() {
         _life = 100f;
@@ -43,5 +46,6 @@ public class Figther : Ship {
         _fuel = 100f;
         _primaryAmmo = 100f;
         _secondaryAmmo = 0f;
+        _attackPowerMultiplier = 1.5f;
     }
 }

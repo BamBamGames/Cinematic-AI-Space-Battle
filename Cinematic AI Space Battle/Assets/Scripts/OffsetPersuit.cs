@@ -2,15 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OffsetPersuit : MonoBehaviour {
+public class OffsetPersuit : SteeringBehaviour {
+    public Boid leader;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    Vector3 targetPos;
+    Vector3 worldTarget;
+    Vector3 offset;
+
+    // Start is called before the first frame update
+    void Start() {
+        offset = transform.position - leader.transform.position;
+        offset = Quaternion.Inverse(leader.transform.rotation) * offset;
+    }
+
+    public override Vector3 Calculate() {
+        
+        worldTarget = leader.transform.TransformPoint(offset);
+
+        float dist = Vector3.Distance(worldTarget, transform.position);
+        float time = dist / boid.maxSpeed;
+        targetPos = worldTarget + (leader.velocity * time);
+        return boid.ArriveForce(targetPos,15);
+       
+        //return boid.ArriveForce(GetComponent<Figther>()._targetFormationFollow.position);
+    }
+
 }
