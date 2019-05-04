@@ -7,6 +7,7 @@ public class Leader : Ship {
     private List<Figther> _followers = new List<Figther>();
     public float _avgDistanceBetweenFollowers;
     public Fleet _fleet;
+    public Fleet _attackingFleet;
 	// Update is called once per frame
 	void Update () {
         CalculateDistanceBetweenFollowers();
@@ -88,5 +89,17 @@ public class Leader : Ship {
         newFollower.transform.localRotation = transform.localRotation;
         fighter._fleet = _fleet;
         _followers.Add(fighter);
+    }
+
+    public void ChooseFleetToAttack() {
+        _attackingFleet = BattleFieldManager.Instance.ChooseNewFleet(this, false);
+
+        if (_attackingFleet == null) {
+            _attackingFleet = BattleFieldManager.Instance.ChooseNewFleet(this, true);
+        }
+
+        if (_attackingFleet == null) {
+            _stateMachine.ChangeState(new SeekingHQ());
+        }
     }
 }

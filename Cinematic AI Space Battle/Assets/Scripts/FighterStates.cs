@@ -30,6 +30,18 @@ public class DecidingRole : State {
     }
 }
 
+public class SeekingHQ : State {
+    public override void Enter() {
+        owner.GetComponent<Seek>()._target = BattleFieldManager.Instance.GetOponentHQ(owner.GetComponent<Ship>()._team);
+    }
+    public override void Exit() {
+
+    }
+    public override void Think() {
+
+    }
+}
+
 
 /// <summary>
 /// Following leader of the fleet
