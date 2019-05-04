@@ -47,7 +47,7 @@ public class Figther : Ship {
         _primaryAmmo = 100f;
         _secondaryAmmo = 0f;
         _attackPowerMultiplier = 1.5f;
-        _fieldOfView = 30;
+        _fieldOfView = 45;
     }
 
     public override void Fire(Transform enemy) {
@@ -57,5 +57,9 @@ public class Figther : Ship {
     public override void CleanUpBeforeDestroy() {
         Debug.Log("Cleaned up" + this + " Life at" + _life);
         _leader._followers.Remove(this);
+    }
+
+    public void SetLeader(Leader leader) {
+        _leader = leader;
     }
 }

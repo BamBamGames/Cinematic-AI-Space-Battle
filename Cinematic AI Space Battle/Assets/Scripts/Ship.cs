@@ -58,6 +58,13 @@ public abstract class Ship : MonoBehaviour {
         if (_life <= 0) {
             CleanUpBeforeDestroy();
             _fleet.RemoveShip(gameObject);
+
+            CameraManager.Instance._cameras.Remove(_cameraFollowing.GetComponent<Camera>());
+            Destroy(_cameraFollowing.gameObject);
+            if (_firstPersonCamera != null) {
+                CameraManager.Instance._cameras.Remove(_firstPersonCamera.GetComponent<Camera>());
+                Destroy(_firstPersonCamera.gameObject);
+            }
             Destroy(gameObject);
         }
     }
@@ -67,6 +74,7 @@ public abstract class Ship : MonoBehaviour {
     private void SetThirdPersonCamera() {
         Vector3 cameraPosition = new Vector3(0, 2, -7);
         ShipCamera cam = ShipCamera.Create(cameraPosition, transform);
+        _cameraFollowing = cam;
     }
 
     private void SetFpsCamera() {
@@ -108,6 +116,7 @@ public abstract class Ship : MonoBehaviour {
 
                             Debug.Log("Player in sight!");
                             Fire(enemy.transform);
+                            break;
                         }
                     }
 
@@ -119,14 +128,19 @@ public abstract class Ship : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.tag == "Bullet") {
+
+        if (_team == Team.red && other.tag == "GreenBullet") {
+            Debug.Log("HIT");
+            _life -= other.GetComponent<Bullet>().GetDamage();
+            other.gameObject.SetActive(false);
+        } else if (_team == Team.green && other.tag == "RedBullet") {
             Debug.Log("HIT");
             _life -= other.GetComponent<Bullet>().GetDamage();
             other.gameObject.SetActive(false);
         }
     }
 
-    protected float _blasterForce = 1000f;
+    protected float _blasterForce = 950f;
     protected float _blasterDamage = 3f;
 
     public void ShootBlaster(float multiplier, Transform enemy) {
@@ -141,9 +155,15 @@ public abstract class Ship : MonoBehaviour {
             b.SetDamage(_blasterDamage * multiplier);
 
             if (_team == Team.red) {
+                b.GetComponent<TrailRenderer>().startColor = Color.red;
+                b.GetComponent<TrailRenderer>().endColor = Color.red;
                 b.GetComponent<Renderer>().material.color = Color.red;
+                b.tag = "RedBullet";
             } else {
+                b.GetComponent<TrailRenderer>().startColor = Color.green;
+                b.GetComponent<TrailRenderer>().endColor = Color.green;
                 b.GetComponent<Renderer>().material.color = Color.green;
+                b.tag = "GreenBullet";
             }
 
             bullet.transform.position = go.transform.position;

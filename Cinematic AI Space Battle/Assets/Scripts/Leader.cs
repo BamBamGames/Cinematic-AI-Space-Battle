@@ -104,6 +104,7 @@ public class Leader : Ship {
         newFollower.transform.localRotation = transform.localRotation;
         fighter._fleet = _fleet;
         fighter.SetTeam(_team);
+        fighter.SetLeader(this);
         _followers.Add(fighter);
     }
 
