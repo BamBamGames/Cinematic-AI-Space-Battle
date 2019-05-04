@@ -25,6 +25,18 @@ public class Fleet : MonoBehaviour {
         UpdateTotalHealth();
 	}
 
+    public void RemoveShip(GameObject go) {
+        _allShips.Remove(go);
+        if (go.GetComponent<Ship>() is Figther) {
+            //_fleetLeader = null;
+            _fleetFighters.Remove(go.GetComponent<Figther>());
+        }
+
+        if (go.GetComponent<Ship>() is Leader) {
+
+        }
+    }
+
     private void UpdateTotalHealth() {
         _totalHealth = 0;
 

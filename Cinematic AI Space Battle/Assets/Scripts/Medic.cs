@@ -24,7 +24,11 @@ public class Medic : Ship {
         _fieldOfView = 20f;
     }
 
-    public override void Fire() {
+    public override void Fire(Transform enemy) {
 
+    }
+
+    public override void CleanUpBeforeDestroy() {
+        throw new System.NotImplementedException();
     }
 }

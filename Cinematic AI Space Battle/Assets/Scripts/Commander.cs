@@ -24,7 +24,11 @@ public class Commander : Ship {
         _fieldOfView = 70f;
     }
 
-    public override void Fire() {
+    public override void Fire(Transform enemy) {
         
+    }
+
+    public override void CleanUpBeforeDestroy() {
+        throw new System.NotImplementedException();
     }
 }

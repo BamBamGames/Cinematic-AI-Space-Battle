@@ -50,7 +50,12 @@ public class Figther : Ship {
         _fieldOfView = 30;
     }
 
-    public override void Fire() {
-        ShootBlaster(_attackPowerMultiplier);
+    public override void Fire(Transform enemy) {
+        ShootBlaster(_attackPowerMultiplier,enemy);
+    }
+
+    public override void CleanUpBeforeDestroy() {
+        Debug.Log("Cleaned up" + this + " Life at" + _life);
+        _leader._followers.Remove(this);
     }
 }

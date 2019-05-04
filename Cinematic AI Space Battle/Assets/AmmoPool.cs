@@ -14,6 +14,7 @@ public class AmmoPool : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         Instance = this;
+        LoadInBlasterPool();
 	}
 	
 	// Update is called once per frame
@@ -25,14 +26,26 @@ public class AmmoPool : MonoBehaviour {
         GameObject bullet = Resources.Load<GameObject>("Bullet");
         for (int i = 0; i < _blasterPoolSize; i++) {
             GameObject nb = Instantiate(bullet);
-            _blasterBullets.Add(Instantiate(bullet));
-            nb.transform.parent = transform;
             nb.SetActive(false);
-
+            _blasterBullets.Add(nb);
+            nb.transform.parent = transform;
+            
         }
     }
 
     private void LoadInMissilePool() {
 
+    }
+
+    public GameObject GetBullet() {
+
+        for (int i = 0; i < _blasterBullets.Count; i++) {
+            if (!_blasterBullets[i].activeInHierarchy) {
+                _blasterBullets[i].transform.parent = null;
+                return _blasterBullets[i];
+            }
+        }
+
+        return null;
     }
 }

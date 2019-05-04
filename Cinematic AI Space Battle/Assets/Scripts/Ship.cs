@@ -19,7 +19,6 @@ public abstract class Ship : MonoBehaviour {
 
     public float _maxSpeed = 10f;
 
-
     public Transform _targetToFollow;
 
     public Fleet _fleet;
@@ -32,11 +31,18 @@ public abstract class Ship : MonoBehaviour {
 
     // Use this for initialization
     public void Start() {
+        GetBlasters();
         SetShipStats();
         SetFpsCamera();
         SetThirdPersonCamera();
         _stateMachine = gameObject.AddComponent<StateMachine>();
         GetComponent<StateMachine>().ChangeState(new DecidingRole());
+        _targetingRoutine = Targeting();
+        StartCoroutine(_targetingRoutine);
+    }
+
+    public void OnDisable() {
+        StopAllCoroutines();
     }
 
     // Update is called once per frame
@@ -44,7 +50,19 @@ public abstract class Ship : MonoBehaviour {
         if (_attackingFleet != null) {
             Targeting();
         }
+
+        CheckLife();
     }
+
+    private void CheckLife() {
+        if (_life <= 0) {
+            CleanUpBeforeDestroy();
+            _fleet.RemoveShip(gameObject);
+            Destroy(gameObject);
+        }
+    }
+
+    public abstract void CleanUpBeforeDestroy();
 
     private void SetThirdPersonCamera() {
         Vector3 cameraPosition = new Vector3(0, 2, -7);
@@ -70,31 +88,72 @@ public abstract class Ship : MonoBehaviour {
         _team = team;
     }
 
-    public void Targeting() {
+    public float _TargetingInterval = 0.5f;
+    IEnumerator _targetingRoutine;
 
-        if (_attackingFleet != null) {
+    IEnumerator Targeting() {
 
-            foreach (GameObject enemy in _attackingFleet.GetAllShips()) {
+        while (true) {
+            if (_attackingFleet != null) {
 
-                if (Vector3.Distance(enemy.transform.position, transform.position) < 40) {
+                foreach (GameObject enemy in _attackingFleet.GetAllShips()) {
 
-                    Debug.Log("Enemy Closer than 40");
-                    Vector3 targetDir = enemy.transform.position - transform.position;
-                    float angleToPlayer = (Vector3.Angle(targetDir, transform.forward));
+                    if (Vector3.Distance(enemy.transform.position, transform.position) < 40) {
 
-                    if (angleToPlayer >= -_fieldOfView && angleToPlayer <= _fieldOfView) {
+                        Debug.Log("Enemy Closer than 40");
+                        Vector3 targetDir = enemy.transform.position - transform.position;
+                        float angleToPlayer = (Vector3.Angle(targetDir, transform.forward));
 
-                        Debug.Log("Player in sight!");
-                        Fire();
+                        if (angleToPlayer >= -_fieldOfView && angleToPlayer <= _fieldOfView) {
+
+                            Debug.Log("Player in sight!");
+                            Fire(enemy.transform);
+                        }
                     }
-                }
 
+                }
             }
+
+            yield return new WaitForSeconds(_TargetingInterval);
         }
     }
 
-    public void ShootBlaster(float multiplier) {
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag == "Bullet") {
+            Debug.Log("HIT");
+            _life -= other.GetComponent<Bullet>().GetDamage();
+            other.gameObject.SetActive(false);
+        }
+    }
 
+    protected float _blasterForce = 1000f;
+    protected float _blasterDamage = 3f;
+
+    public void ShootBlaster(float multiplier, Transform enemy) {
+        Rigidbody rb;
+        Debug.Log("Blaster shot");
+        foreach (GameObject go in _blasters) {
+
+            GameObject bullet = AmmoPool.Instance.GetBullet();
+            bullet.SetActive(true);
+
+            Bullet b = bullet.GetComponent<Bullet>();
+            b.SetDamage(_blasterDamage * multiplier);
+
+            if (_team == Team.red) {
+                b.GetComponent<Renderer>().material.color = Color.red;
+            } else {
+                b.GetComponent<Renderer>().material.color = Color.green;
+            }
+
+            bullet.transform.position = go.transform.position;
+            bullet.transform.localRotation = go.transform.localRotation;
+            rb = bullet.GetComponent<Rigidbody>();
+
+            Vector3 dir = enemy.position - transform.position;
+            rb.AddForce(dir * _blasterForce * multiplier);
+
+        }
     }
 
     public void GetBlasters() {
@@ -105,5 +164,5 @@ public abstract class Ship : MonoBehaviour {
         }
     }
 
-    public abstract void Fire();
+    public abstract void Fire(Transform enemy);
 }

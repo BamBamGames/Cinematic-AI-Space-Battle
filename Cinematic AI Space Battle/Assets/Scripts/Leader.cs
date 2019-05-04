@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Leader : Ship {
 
-    private List<Figther> _followers = new List<Figther>();
+    public List<Figther> _followers = new List<Figther>();
     public float _avgDistanceBetweenFollowers;
 
     IEnumerator _searchForFleet;
@@ -103,6 +103,7 @@ public class Leader : Ship {
         newFollower.transform.position = transform.TransformPoint(pos);
         newFollower.transform.localRotation = transform.localRotation;
         fighter._fleet = _fleet;
+        fighter.SetTeam(_team);
         _followers.Add(fighter);
     }
 
@@ -138,6 +139,13 @@ public class Leader : Ship {
         if (_attackingFleet != null) {
             UpdateChasingFleetPos();
             _stateMachine.ChangeState(new ChasingFleet());
+            SetFollowerAttackingFleetOrder();
+        }
+    }
+
+    private void SetFollowerAttackingFleetOrder() {
+        foreach (Figther f in _followers) {
+            f._attackingFleet = _attackingFleet;
         }
     }
 
@@ -146,7 +154,11 @@ public class Leader : Ship {
         _targetToFollow = _attackingFleet.GetAveragePositionAsTransform();
     }
 
-    public override void Fire() {
+    public override void Fire(Transform enemy) {
 
+    }
+
+    public override void CleanUpBeforeDestroy() {
+        throw new System.NotImplementedException();
     }
 }

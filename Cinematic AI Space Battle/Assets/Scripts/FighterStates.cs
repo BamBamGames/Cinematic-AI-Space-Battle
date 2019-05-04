@@ -141,7 +141,7 @@ public class Regrouping : State {
 /// </summary>
 public class Engaging : State {
     public override void Enter() {
-        owner.GetComponent<Ship>().Targeting(); ;
+        //owner.GetComponent<Ship>().Targeting(); ;
     }
     public override void Exit() {
 
