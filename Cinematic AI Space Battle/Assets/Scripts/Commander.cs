@@ -21,5 +21,10 @@ public class Commander : Ship {
         _primaryAmmo = 500f;
         _secondaryAmmo = 500f;
         _attackPowerMultiplier = 3f;
+        _fieldOfView = 70f;
+    }
+
+    public override void Fire() {
+        
     }
 }

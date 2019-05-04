@@ -9,6 +9,7 @@ public class Figther : Ship {
 	
 	// Update is called once per frame
 	void Update () {
+        base.Update();
 		
 	}
 
@@ -46,5 +47,10 @@ public class Figther : Ship {
         _primaryAmmo = 100f;
         _secondaryAmmo = 0f;
         _attackPowerMultiplier = 1.5f;
+        _fieldOfView = 30;
+    }
+
+    public override void Fire() {
+        ShootBlaster(_attackPowerMultiplier);
     }
 }

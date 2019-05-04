@@ -16,6 +16,7 @@ public class Leader : Ship {
     }
     // Update is called once per frame
     void Update () {
+        base.Update();
         if (_attackingFleet != null) {
             UpdateChasingFleetPos();
         }
@@ -47,6 +48,7 @@ public class Leader : Ship {
         _primaryAmmo = 250f;
         _secondaryAmmo = 200f;
         _attackPowerMultiplier = 2f;
+        _fieldOfView = 60f;
     }
 
 
@@ -142,5 +144,9 @@ public class Leader : Ship {
     Transform pos;
     public void UpdateChasingFleetPos() {
         _targetToFollow = _attackingFleet.GetAveragePositionAsTransform();
+    }
+
+    public override void Fire() {
+
     }
 }

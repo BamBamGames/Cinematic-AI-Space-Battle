@@ -7,14 +7,18 @@ public abstract class Ship : MonoBehaviour {
     private ShipCamera _cameraFollowing;
     private ShipCamera _firstPersonCamera;
 
+    public List<GameObject> _blasters = new List<GameObject>();
+
     public float _life;
     public float _armomr;
     public float _fuel;
     public float _primaryAmmo;
     public float _secondaryAmmo;
     public float _attackPowerMultiplier;
+    public float _fieldOfView;
 
     public float _maxSpeed = 10f;
+
 
     public Transform _targetToFollow;
 
@@ -27,21 +31,23 @@ public abstract class Ship : MonoBehaviour {
     public Team _team;
 
     // Use this for initialization
-    public void Start () {
+    public void Start() {
         SetShipStats();
         SetFpsCamera();
         SetThirdPersonCamera();
         _stateMachine = gameObject.AddComponent<StateMachine>();
         GetComponent<StateMachine>().ChangeState(new DecidingRole());
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    }
+
+    // Update is called once per frame
+    public void Update() {
+        if (_attackingFleet != null) {
+            Targeting();
+        }
+    }
 
     private void SetThirdPersonCamera() {
-        Vector3 cameraPosition = new Vector3(0,2,-7);
+        Vector3 cameraPosition = new Vector3(0, 2, -7);
         ShipCamera cam = ShipCamera.Create(cameraPosition, transform);
     }
 
@@ -66,12 +72,38 @@ public abstract class Ship : MonoBehaviour {
 
     public void Targeting() {
 
+        if (_attackingFleet != null) {
 
+            foreach (GameObject enemy in _attackingFleet.GetAllShips()) {
 
-        Vector3 targetDir = transform.position - transform.position;
-        float angleToPlayer = (Vector3.Angle(targetDir, transform.forward));
+                if (Vector3.Distance(enemy.transform.position, transform.position) < 40) {
 
-        if (angleToPlayer >= -90 && angleToPlayer <= 90) // 180° FOV
-            Debug.Log("Player in sight!");
+                    Debug.Log("Enemy Closer than 40");
+                    Vector3 targetDir = enemy.transform.position - transform.position;
+                    float angleToPlayer = (Vector3.Angle(targetDir, transform.forward));
+
+                    if (angleToPlayer >= -_fieldOfView && angleToPlayer <= _fieldOfView) {
+
+                        Debug.Log("Player in sight!");
+                        Fire();
+                    }
+                }
+
+            }
+        }
     }
+
+    public void ShootBlaster(float multiplier) {
+
+    }
+
+    public void GetBlasters() {
+        foreach (Transform child in transform) {
+            if (child.name.Contains("Gun")) {
+                _blasters.Add(child.gameObject);
+            }
+        }
+    }
+
+    public abstract void Fire();
 }

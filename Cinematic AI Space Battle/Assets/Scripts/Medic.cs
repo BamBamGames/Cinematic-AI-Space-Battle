@@ -21,6 +21,10 @@ public class Medic : Ship {
         _primaryAmmo = 100f;
         _secondaryAmmo = 0f;
         _attackPowerMultiplier = 1f;
+        _fieldOfView = 20f;
     }
 
+    public override void Fire() {
+
+    }
 }

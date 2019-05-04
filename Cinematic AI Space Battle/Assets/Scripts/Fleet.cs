@@ -67,7 +67,7 @@ public class Fleet : MonoBehaviour {
     }
 
     public List<GameObject> GetAllShips() {
-
+        return _allShips;
     }
 
 }

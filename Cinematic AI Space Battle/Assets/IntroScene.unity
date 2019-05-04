@@ -150,9 +150,13 @@ MonoBehaviour:
   _primaryAmmo: 0
   _secondaryAmmo: 0
   _attackPowerMultiplier: 0
+  _fieldOfView: 0
   _maxSpeed: 10
   _targetToFollow: {fileID: 0}
+  _fleet: {fileID: 0}
+  _attackingFleet: {fileID: 0}
   _stateMachine: {fileID: 0}
+  _team: 0
 --- !u!114 &17705183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -595,6 +599,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &277518532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 277518534}
+  - component: {fileID: 277518533}
+  m_Layer: 0
+  m_Name: BattleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &277518533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 277518532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36f085a5f0e0070439cadd426cb25dd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _greenLeaders: []
+  _redLeaders: []
+  _greenCommander: {fileID: 0}
+  _redCommander: {fileID: 0}
+  _greenFleets: []
+  _redFleets: []
+  _distanceWeightDecision: 10
+  _greenHQ: {fileID: 263786353}
+  _redHQ: {fileID: 1392417447}
+--- !u!4 &277518534
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 277518532}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.166147, y: -13.25721, z: 28.092062}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &311723868
 Prefab:
@@ -1253,9 +1306,13 @@ MonoBehaviour:
   _primaryAmmo: 0
   _secondaryAmmo: 0
   _attackPowerMultiplier: 0
+  _fieldOfView: 0
   _maxSpeed: 10
   _targetToFollow: {fileID: 0}
+  _fleet: {fileID: 0}
+  _attackingFleet: {fileID: 0}
   _stateMachine: {fileID: 0}
+  _team: 0
 --- !u!114 &782172020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1424,9 +1481,13 @@ MonoBehaviour:
   _primaryAmmo: 0
   _secondaryAmmo: 0
   _attackPowerMultiplier: 0
+  _fieldOfView: 0
   _maxSpeed: 10
   _targetToFollow: {fileID: 0}
+  _fleet: {fileID: 0}
+  _attackingFleet: {fileID: 0}
   _stateMachine: {fileID: 0}
+  _team: 0
 --- !u!4 &940294725 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4127218241165682, guid: 7ed4b14b045b8074bb0d576465cd5fd1,
@@ -1821,9 +1882,13 @@ MonoBehaviour:
   _primaryAmmo: 0
   _secondaryAmmo: 0
   _attackPowerMultiplier: 0
+  _fieldOfView: 0
   _maxSpeed: 10
   _targetToFollow: {fileID: 0}
+  _fleet: {fileID: 0}
+  _attackingFleet: {fileID: 0}
   _stateMachine: {fileID: 0}
+  _team: 0
 --- !u!1001 &1107753842
 Prefab:
   m_ObjectHideFlags: 0
@@ -2210,9 +2275,13 @@ MonoBehaviour:
   _primaryAmmo: 0
   _secondaryAmmo: 0
   _attackPowerMultiplier: 0
+  _fieldOfView: 0
   _maxSpeed: 10
   _targetToFollow: {fileID: 0}
+  _fleet: {fileID: 0}
+  _attackingFleet: {fileID: 0}
   _stateMachine: {fileID: 0}
+  _team: 0
   _avgDistanceBetweenFollowers: 0
 --- !u!1 &1336816974 stripped
 GameObject:
@@ -2251,9 +2320,13 @@ MonoBehaviour:
   _primaryAmmo: 0
   _secondaryAmmo: 0
   _attackPowerMultiplier: 0
+  _fieldOfView: 0
   _maxSpeed: 10
   _targetToFollow: {fileID: 0}
+  _fleet: {fileID: 0}
+  _attackingFleet: {fileID: 0}
   _stateMachine: {fileID: 0}
+  _team: 0
 --- !u!114 &1336816977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2355,7 +2428,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1392417447}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 35.82}
+  m_LocalPosition: {x: 0, y: 0, z: 300}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2599,9 +2672,13 @@ MonoBehaviour:
   _primaryAmmo: 0
   _secondaryAmmo: 0
   _attackPowerMultiplier: 0
+  _fieldOfView: 0
   _maxSpeed: 10
   _targetToFollow: {fileID: 0}
+  _fleet: {fileID: 0}
+  _attackingFleet: {fileID: 0}
   _stateMachine: {fileID: 0}
+  _team: 0
 --- !u!4 &1857730185 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4127218241165682, guid: 7ed4b14b045b8074bb0d576465cd5fd1,
@@ -2852,7 +2929,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1944044280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2906,9 +2983,13 @@ MonoBehaviour:
   _primaryAmmo: 0
   _secondaryAmmo: 0
   _attackPowerMultiplier: 0
+  _fieldOfView: 0
   _maxSpeed: 10
   _targetToFollow: {fileID: 0}
+  _fleet: {fileID: 0}
+  _attackingFleet: {fileID: 0}
   _stateMachine: {fileID: 0}
+  _team: 0
 --- !u!114 &2093535896
 MonoBehaviour:
   m_ObjectHideFlags: 0
