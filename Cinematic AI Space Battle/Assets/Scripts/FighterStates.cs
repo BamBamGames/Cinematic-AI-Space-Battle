@@ -14,16 +14,21 @@ public class DecidingRole : State {
             ship.GetComponent<StateMachine>().ChangeState(new FollowingLeader());
         }
 
-        if (owner.GetComponent<Ship>() is Leader) {
-
+        if ((ship = owner.GetComponent<Ship>()) is Leader) {
+            ship.GetComponent<Leader>().StartFleetSearch();
         }
 
-        if (owner.GetComponent<Ship>() is Commander) {
+        if ((ship = owner.GetComponent<Ship>()) is Commander) {
 
         }
     }
+
     public override void Exit() {
-     
+        Ship ship;
+
+        if ((ship = owner.GetComponent<Ship>()) is Leader) {
+            ship.GetComponent<Leader>().EndSearchForFleet();
+        }
     }
     public override void Think() {
 
@@ -32,7 +37,7 @@ public class DecidingRole : State {
 
 public class SeekingHQ : State {
     public override void Enter() {
-        owner.GetComponent<Seek>()._target = BattleFieldManager.Instance.GetOponentHQ(owner.GetComponent<Ship>()._team);
+        owner.GetComponent<Seek>()._target = BattleFieldManager.Instance.GetOpponentHQ(owner.GetComponent<Ship>()._team).transform;
     }
     public override void Exit() {
 
@@ -48,13 +53,13 @@ public class SeekingHQ : State {
 /// </summary>
 public class FollowingLeader : State {
     public override void Enter() {
-        Debug.Log("Entered Travelling State" + owner);
+        Debug.Log("Entered Following leader State" + owner);
         //owner.GetComponent<Figther>().PickTargetBase();
         owner.GetComponent<Arrive>().targetGameObject = owner.GetComponent<Figther>()._targetToFollow.gameObject;
         owner.GetComponent<Arrive>().enabled = true;
     }
     public override void Exit() {
-        Debug.Log("Entered Travelling State" + owner);
+        Debug.Log("Exited Following leader State" + owner);
         //owner.GetComponent<Figther>().PickTargetBase();
         owner.GetComponent<Arrive>().enabled = false;
     }
@@ -67,18 +72,35 @@ public class FollowingLeader : State {
 
 public class Chasing : State {
     public override void Enter() {
-        Debug.Log("Entered Travelling State" + owner);
+        Debug.Log("Entered Chasing State" + owner);
         //owner.GetComponent<Figther>().PickTargetBase();
-        owner.GetComponent<Seek>()._target = owner.GetComponent<Figther>()._targetToFollow.gameObject.transform;
+        owner.GetComponent<Seek>()._target = owner.GetComponent<Ship>()._targetToFollow.gameObject.transform;
         owner.GetComponent<Seek>().enabled = true;
     }
     public override void Exit() {
-        Debug.Log("Entered Travelling State" + owner);
+        Debug.Log("Exited Chasing State State" + owner);
         //owner.GetComponent<Figther>().PickTargetBase();
         owner.GetComponent<Seek>().enabled = false;
     }
     public override void Think() {
         
+    }
+}
+
+public class ChasingFleet : State {
+    public override void Enter() {
+        Debug.Log("Entered Chasing Fleet State" + owner);
+        //owner.GetComponent<Figther>().PickTargetBase();
+        owner.GetComponent<Seek>().enabled = true;
+        owner.GetComponent<Seek>()._target = owner.GetComponent<Ship>()._targetToFollow.gameObject.transform;  
+    }
+    public override void Exit() {
+        Debug.Log("Exited Travelling State" + owner);
+        //owner.GetComponent<Figther>().PickTargetBase();
+        owner.GetComponent<Seek>().enabled = false;
+    }
+    public override void Think() {
+
     }
 }
 

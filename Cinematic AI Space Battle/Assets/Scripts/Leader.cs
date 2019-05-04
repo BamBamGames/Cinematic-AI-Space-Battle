@@ -6,10 +6,19 @@ public class Leader : Ship {
 
     private List<Figther> _followers = new List<Figther>();
     public float _avgDistanceBetweenFollowers;
-    public Fleet _fleet;
-    public Fleet _attackingFleet;
-	// Update is called once per frame
-	void Update () {
+
+    IEnumerator _searchForFleet;
+
+    private void Start() {
+        _searchForFleet = SearchForFleet();
+        base.Start();
+       
+    }
+    // Update is called once per frame
+    void Update () {
+        if (_attackingFleet != null) {
+            UpdateChasingFleetPos();
+        }
         CalculateDistanceBetweenFollowers();
         RegulateSpeed();
 	}
@@ -67,6 +76,10 @@ public class Leader : Ship {
                 SpawnWedge(fightersAvailable);
                 break;
         }
+
+        _fleet.AddLeader(this);
+        _fleet.AddFighters(_followers);
+        BattleFieldManager.Instance.AddFleet(_fleet, _team);
         Debug.Log("Finished spawning fleet");
     }
 
@@ -91,6 +104,24 @@ public class Leader : Ship {
         _followers.Add(fighter);
     }
 
+    IEnumerator SearchForFleet() {
+        while (true) {
+
+            ChooseFleetToAttack();
+            //UpdateChasingFleetPos();
+            yield return new WaitForSeconds(10f);
+        }
+    }
+
+    public void StartFleetSearch() {
+        StartCoroutine(_searchForFleet);
+
+    }
+
+    public void EndSearchForFleet() {
+        StopCoroutine(_searchForFleet);
+    }
+
     public void ChooseFleetToAttack() {
         _attackingFleet = BattleFieldManager.Instance.ChooseNewFleet(this, false);
 
@@ -101,5 +132,15 @@ public class Leader : Ship {
         if (_attackingFleet == null) {
             _stateMachine.ChangeState(new SeekingHQ());
         }
+
+        if (_attackingFleet != null) {
+            UpdateChasingFleetPos();
+            _stateMachine.ChangeState(new ChasingFleet());
+        }
+    }
+
+    Transform pos;
+    public void UpdateChasingFleetPos() {
+        _targetToFollow = _attackingFleet.GetAveragePositionAsTransform();
     }
 }

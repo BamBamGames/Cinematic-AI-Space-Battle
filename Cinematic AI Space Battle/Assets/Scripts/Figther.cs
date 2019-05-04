@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Figther : Ship {
 
-    private GameObject _leader;
+    private Leader _leader;
     private GameObject _enemyTarget;
-    public Fleet _fleet;
 	
 	// Update is called once per frame
 	void Update () {

@@ -18,13 +18,16 @@ public abstract class Ship : MonoBehaviour {
 
     public Transform _targetToFollow;
 
+    public Fleet _fleet;
+    public Fleet _attackingFleet;
+
 
     public StateMachine _stateMachine;
 
     public Team _team;
 
     // Use this for initialization
-    void Start () {
+    public void Start () {
         SetShipStats();
         SetFpsCamera();
         SetThirdPersonCamera();
@@ -62,6 +65,8 @@ public abstract class Ship : MonoBehaviour {
     }
 
     public void Targeting() {
+
+
 
         Vector3 targetDir = transform.position - transform.position;
         float angleToPlayer = (Vector3.Angle(targetDir, transform.forward));

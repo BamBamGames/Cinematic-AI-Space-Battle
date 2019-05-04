@@ -39,8 +39,14 @@ public class Boid : MonoBehaviour
             if (b.isActiveAndEnabled)
             {
                 this.behaviours.Add(b);
+
+                if (!(b is ObstacleAvoidance)) {
+                    b.enabled = false;
+                }
             }
         }
+
+        
     }
 
     public Vector3 SeekForce(Vector3 target)
@@ -57,7 +63,7 @@ public class Boid : MonoBehaviour
 
         float distance = toTarget.magnitude;
         
-        if (distance < 0.1f)
+        if (distance < 1f)
         {
             return Vector3.zero;
         }

@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class Fleet : MonoBehaviour {
 
-    private List<GameObject> _allShips = new List<GameObject>();
-    private Leader _fleetLeader;
-    private List<Figther> _fleetFighters = new List<Figther>();
+    public List<GameObject> _allShips = new List<GameObject>();
+    public Leader _fleetLeader;
+    public List<Figther> _fleetFighters = new List<Figther>();
     public bool _inBattle = false;
-    private Vector3 _averagePosition;
+    public Vector3 _averagePosition;
     private float _totalHealth;
 	// Use this for initialization
 	void Start () {
-		
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
         if (_allShips.Count > 0) {
             _averagePosition = VectorMaths.GetMeanVector(_allShips);
+            transform.position = _averagePosition;
         }
 
         UpdateTotalHealth();
@@ -59,6 +60,14 @@ public class Fleet : MonoBehaviour {
 
     public Vector3 GetAveragePosition() {
         return _averagePosition;
+    }
+
+    public Transform GetAveragePositionAsTransform() {
+        return transform;
+    }
+
+    public List<GameObject> GetAllShips() {
+
     }
 
 }

@@ -25,7 +25,7 @@ public class VectorMaths : MonoBehaviour {
         foreach (GameObject go in objects) {
             x += go.transform.position.x;
             y += go.transform.position.y;
-            z += go.transform.position.y;
+            z += go.transform.position.z;
         }
         return new Vector3(x / objects.Count, y / objects.Count, z / objects.Count);
     }

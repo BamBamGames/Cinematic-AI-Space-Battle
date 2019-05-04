@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class BattleFieldManager : MonoBehaviour {
 
-    private List<Leader> _greenLeaders = new List<Leader>();
-    private List<Leader> _redLeaders = new List<Leader>();
-    private Commander _greenCommander;
-    private Commander _redCommander;
-    private List<Fleet> _greenFleets = new List<Fleet>();
-    private List<Fleet> _redFleets = new List<Fleet>();
+    public List<Leader> _greenLeaders = new List<Leader>();
+    public List<Leader> _redLeaders = new List<Leader>();
+    public Commander _greenCommander;
+    public Commander _redCommander;
+    public List<Fleet> _greenFleets = new List<Fleet>();
+    public List<Fleet> _redFleets = new List<Fleet>();
     public float _distanceWeightDecision = 10f;
 
     public GameObject _greenHQ;
@@ -59,7 +59,6 @@ public class BattleFieldManager : MonoBehaviour {
         }
 
         return optimalFleet;
-
     }
     
 
@@ -79,6 +78,20 @@ public class BattleFieldManager : MonoBehaviour {
         }
     }
 
-    public void GetOpponentHQ(Team team) {
+    public void AddFleet(Fleet fleet, Team team) {
+        if (team == Team.red) {
+            _redFleets.Add(fleet);
+        } else {
+            _greenFleets.Add(fleet);
+        }
+    }
+
+    public GameObject GetOpponentHQ(Team team) {
+
+        if (team == Team.red) {
+            return _greenHQ;
+        } else {
+            return _redHQ;
+        }
     }
 }
