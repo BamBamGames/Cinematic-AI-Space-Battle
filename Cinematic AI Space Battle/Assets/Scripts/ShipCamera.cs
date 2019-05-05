@@ -43,11 +43,14 @@ public class ShipCamera : MonoBehaviour {
 	}
 
     private void AdjustCameraPosition() {
-        _tragetPos = _target.transform.position - _target.transform.forward * 7f;
-        _tragetPos = new Vector3(_tragetPos.x, _tragetPos.y + 2f, _tragetPos.z);
-        transform.LookAt(_target);
+        try {
+            _tragetPos = _target.transform.position - _target.transform.forward * 7f;
+            _tragetPos = new Vector3(_tragetPos.x, _tragetPos.y + 2f, _tragetPos.z);
+            transform.LookAt(_target);
 
-        transform.position = Vector3.Lerp(transform.position, _tragetPos,Time.deltaTime * _lerpSpeed);
+            transform.position = Vector3.Lerp(transform.position, _tragetPos, Time.deltaTime * _lerpSpeed);
+        } catch {
+        }
     }
 
     public void AutoDestroy() {

@@ -36,6 +36,26 @@ public class DecidingRole : State {
     }
 }
 
+public class Escaping : State {
+    public override void Enter() {
+        Debug.Log("Entered Escaping State");
+        owner.GetComponent<Evasive>().enabled = true;
+        owner.GetComponent<Escape>().enabled = true;
+        owner.GetComponent<Escape>().weight = 0.1f;
+        owner.GetComponent<Evasive>().weight = 0.7f;
+        owner.GetComponent<Evasive>().StartEvasiveManuevers(Random.Range(0,3));
+        owner.GetComponent<Boid>().maxSpeed = owner.GetComponent<Ship>()._maxSpeed * 0.6f;
+        owner.GetComponent<Escape>().targetGameObject = owner.GetComponent<Ship>()._attackingFleet._fleetLeader.gameObject;
+    }
+    public override void Exit() {
+        owner.GetComponent<Escape>().enabled = false;
+        owner.GetComponent<Evasive>().enabled = false;
+    }
+    public override void Think() {
+
+    }
+}
+
 public class SeekingHQ : State {
     public override void Enter() {
         owner.GetComponent<Seek>()._target = BattleFieldManager.Instance.GetOpponentHQ(owner.GetComponent<Ship>()._team).transform;
@@ -88,22 +108,6 @@ public class Chasing : State {
     }
 }
 
-public class ChasingFleet : State {
-    public override void Enter() {
-        Debug.Log("Entered Chasing Fleet State" + owner);
-        //owner.GetComponent<Figther>().PickTargetBase();
-        owner.GetComponent<Seek>().enabled = true;
-        owner.GetComponent<Seek>()._target = owner.GetComponent<Ship>()._targetToFollow.gameObject.transform;  
-    }
-    public override void Exit() {
-        Debug.Log("Exited Travelling State" + owner);
-        //owner.GetComponent<Figther>().PickTargetBase();
-        owner.GetComponent<Seek>().enabled = false;
-    }
-    public override void Think() {
-
-    }
-}
 
 /// <summary>
 /// Trying to get away from enemy
@@ -119,8 +123,6 @@ public class Evading : State {
 
     }
 }
-
-
 
 /// <summary>
 /// Coming back to leader
@@ -201,21 +203,6 @@ public class SearchingForBattle : State {
     }
 }
 
-public class SearchingForEnemyFleet : State {
-    public override void Enter() {
-        owner.GetComponent<Seek>().enabled = false;
-        owner.GetComponent<Leader>().StartFleetSearch();
-    }
-    public override void Exit() {
-        owner.GetComponent<Evasive>().enabled = false;
-        owner.GetComponent<Leader>().EndSearchForFleet();
-    }
-    public override void Think() {
-        if (owner.GetComponent<Leader>()._attackingFleet != null) {
-            owner.GetComponent<Leader>().EndSearchForFleet();
-        }
-    }
-}
 
 
 /// <summary>
@@ -232,74 +219,3 @@ public class SuicideMission : State {
 
     }
 }
-/*
-public class Travelling : State {
-    //public StateMachine owner;
-    public override void Enter() {
-        Debug.Log("Entered Travelling State" + owner);
-        owner.GetComponent<FighterScript>().PickTargetBase();
-        owner.GetComponent<Arrive>().enabled = true;
-    }
-    public override void Exit() {
-        Debug.Log("Exited Travelling State" + owner);
-        owner.GetComponent<Arrive>().enabled = false;
-        owner.GetComponent<Boid>().velocity = Vector3.zero;
-        //Turn off seek behaviour
-    }
-    public override void Think() {
-        //If target is < 20 away from base transition to attacking state
-        Vector3 target = owner.GetComponent<FighterScript>().target.position;
-        if (Vector3.Distance(owner.transform.position, target) < 20) {
-            owner.GetComponent<StateMachine>().ChangeState(new Attacking());
-        }
-    }
-}
-
-public class Refueling : State {
-    public override void Enter() {
-        owner.GetComponent<FighterScript>().AttemptRefuel();
-    }
-    public override void Exit() {
-        owner.GetComponent<FighterScript>().StopRefueling();
-    }
-    public override void Think() {
-        if (owner.GetComponent<FighterScript>().GetTiribium() >= 7) {
-            owner.GetComponent<StateMachine>().ChangeState(new Travelling());
-        }
-    }
-}
-
-public class Attacking : State {
-    //public StateMachine owner;
-    public override void Enter() {
-        owner.GetComponent<FighterScript>().StartShootingBase();
-    }
-    public override void Exit() {
-        owner.GetComponent<FighterScript>().StopShootingBase();
-    }
-    public override void Think() {
-        if (owner.GetComponent<FighterScript>().GetTiribium() <= 0) {
-            owner.GetComponent<StateMachine>().ChangeState(new Retrieving());
-        }
-    }
-}
-
-public class Retrieving : State {
-    //public StateMachine owner;
-    public override void Enter() {
-        owner.GetComponent<FighterScript>().SetParentTarget();
-        owner.GetComponent<Arrive>().enabled = true;
-    }
-    public override void Exit() {
-        owner.GetComponent<Arrive>().enabled = false;
-        // finish seek
-    }
-    public override void Think() {
-        //keep checking if at the base or not, if hit the base despawn
-        Vector3 target = owner.GetComponent<FighterScript>().target.position;
-        if (Vector3.Distance(owner.transform.position, target) < 1) {
-            owner.GetComponent<StateMachine>().ChangeState(new Refueling());
-        }
-    }
-}
-*/

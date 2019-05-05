@@ -11,12 +11,12 @@ public class BattleFieldManager : MonoBehaviour {
     public List<Fleet> _greenFleets = new List<Fleet>();
     public List<Fleet> _redFleets = new List<Fleet>();
     public float _distanceWeightDecision = 10f;
-    public float _distanceBeforeFleetEngage = 50f;
+    public float _distanceBeforeFleetEngage = 80f;
 
     public GameObject _greenHQ;
     public GameObject _redHQ;
 
-    private List<FleetPair> _fleetPairs = new List<FleetPair>();
+    public List<FleetPair> _fleetPairs = new List<FleetPair>();
 
     public static BattleFieldManager Instance;
 	// Use this for initialization
@@ -33,9 +33,25 @@ public class BattleFieldManager : MonoBehaviour {
         foreach (FleetPair pair in _fleetPairs) {
             if (!pair.IsEngaged()) {
                 if (Vector3.Distance(pair.GetFirstFleet().GetAveragePosition(), pair.GetSecondFleet().GetAveragePosition()) < _distanceBeforeFleetEngage) {
+                    Debug.Log("Fleets engaged:" + pair.GetFirstFleet() + " and " + pair.GetSecondFleet());
                     pair.Engaged();
                     InitiateEngagementBetweenFleets(pair);
                 }
+            } else if(pair.IsEngaged()){
+                Fleet first = pair.GetFirstFleet();
+                if (!first._fleeing && first._allShips.Count <= 3) {
+                    first._fleeing = true;
+                    first.StartFleeing();
+                    Debug.Log("Fleet fleeing:" + first);
+                }
+
+                Fleet second = pair.GetSecondFleet();
+                if (!second._fleeing && second._allShips.Count <= 3) {
+                    second._fleeing = true;
+                    second.StartFleeing();
+                    Debug.Log("Fleet fleeing:" + second);
+                }
+
             }
         }
     }
@@ -81,8 +97,11 @@ public class BattleFieldManager : MonoBehaviour {
         }
 
         //Adds a fleet pair for the battle manager to store
-        if (choosingLeader._fleet != null && choosingLeader._attackingFleet != null) {
-            _fleetPairs.Add(new FleetPair(choosingLeader._fleet, choosingLeader._attackingFleet));
+        if (optimalFleet != null) {
+            Debug.Log("Added fleet pair");
+            _fleetPairs.Add(FleetPair.Create(choosingLeader._fleet, optimalFleet));
+        } else {
+            Debug.Log("Could not add fleets to pair");
         }
 
         if (optimalFleet != null) {

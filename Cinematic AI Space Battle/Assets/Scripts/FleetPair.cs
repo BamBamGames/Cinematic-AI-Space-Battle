@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FleetPair{
+public class FleetPair : MonoBehaviour{
 
-    private Fleet _pair1;
-    private Fleet _pair2;
-    private bool _engaged = false;
+    protected Fleet _pair1;
+    protected Fleet _pair2;
+    protected bool _engaged = false;
 
-    public FleetPair(Fleet first, Fleet second) {
-        _pair1 = first;
-        _pair2 = second;
+    public StateMachine _stateMachine;
+
+    private void Start() {
+        _stateMachine = gameObject.AddComponent<StateMachine>();
     }
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    public static FleetPair Create(Fleet first, Fleet second) {
+        FleetPair fleetPair = new GameObject().AddComponent<FleetPair>();
+        fleetPair._pair1 = first;
+        fleetPair._pair2 = second;
+
+        return fleetPair;
+    }
 
     public Fleet GetFirstFleet() {
         return _pair1;
@@ -36,5 +36,27 @@ public class FleetPair{
 
     public void Engaged() {
         _engaged = true;
+    }
+
+    IEnumerator ChangeFightBehaviours() {
+
+        while (true) {
+
+            yield return new WaitForSeconds(20f);
+
+            ChangePairBehaviour();
+        }
+    }
+
+    private void ChangePairBehaviour() {
+
+        Fleet fleetToEscape;
+
+        if (_pair1._totalHealth < _pair2._totalHealth) {
+            fleetToEscape = _pair1;
+        } else {
+            fleetToEscape = _pair2;
+        }
+
     }
 }

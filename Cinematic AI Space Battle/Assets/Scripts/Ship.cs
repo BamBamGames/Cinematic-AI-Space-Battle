@@ -43,6 +43,10 @@ public abstract class Ship : MonoBehaviour {
             Destroy(GetComponent<AudioSource>());
         }
 
+        Escape escape = gameObject.AddComponent<Escape>();
+        escape.enabled = false;
+
+
         _engineSource = gameObject.AddComponent<AudioSource>();
         _engineSource.loop = true;
         _engineSource.clip = AudiSourceManager.Instance._engine;
@@ -208,7 +212,7 @@ public abstract class Ship : MonoBehaviour {
         _hq = hq;
     }
 
-    public float _TargetingInterval = 0.2f;
+    public float _TargetingInterval = 0.1f;
     IEnumerator _targetingRoutine;
 
     IEnumerator Targeting() {
@@ -218,7 +222,7 @@ public abstract class Ship : MonoBehaviour {
 
                 foreach (GameObject enemy in _attackingFleet.GetAllShips()) {
 
-                    if (Vector3.Distance(enemy.transform.position, transform.position) < 40) {
+                    if (Vector3.Distance(enemy.transform.position, transform.position) < 50) {
 
                         //Debug.Log("Enemy Closer than 40");
                         Vector3 targetDir = enemy.transform.position - transform.position;

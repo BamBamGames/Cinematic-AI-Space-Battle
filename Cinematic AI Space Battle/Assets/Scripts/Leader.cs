@@ -61,7 +61,7 @@ public class Leader : Ship {
         _primaryAmmo = 250f;
         _secondaryAmmo = 200f;
         _attackPowerMultiplier = 2f;
-        _fieldOfView = 60f;
+        _fieldOfView = BattleSettings.Instance._leaderFieldOfView;
     }
 
 
@@ -172,7 +172,7 @@ public class Leader : Ship {
     }
 
     public override void Fire(Transform enemy) {
-
+        ShootBlaster(_attackPowerMultiplier, enemy);
     }
 
     public override void CleanUpBeforeDestroy() {

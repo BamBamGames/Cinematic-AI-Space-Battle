@@ -8,8 +8,9 @@ public class Fleet : MonoBehaviour {
     public Leader _fleetLeader;
     public List<Figther> _fleetFighters = new List<Figther>();
     public bool _inBattle = false;
+    public bool _fleeing = false;
     public Vector3 _averagePosition;
-    private float _totalHealth;
+    public float _totalHealth;
 	// Use this for initialization
 	void Start () {
 
@@ -86,6 +87,10 @@ public class Fleet : MonoBehaviour {
         foreach (GameObject g in _allShips) {
             g.GetComponent<Ship>().AddCameraToManager(); 
         }
+    }
+
+    public void StartFleeing() {
+        _fleetLeader._stateMachine.ChangeState(new Escaping());
     }
 
 }

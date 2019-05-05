@@ -77,6 +77,11 @@ public class Evasive : SteeringBehaviour {
         StartCoroutine(EvasiveManuevers());
     }
 
+    public void StartEvasiveManuevers(int interval) {
+        intervalInSecondsManuever = interval;
+        StartCoroutine(EvasiveManuevers());
+    }
+
     public void ChooseDirectionOnce() {
         StopAllCoroutines();
     }

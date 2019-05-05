@@ -47,7 +47,7 @@ public class Figther : Ship {
         _primaryAmmo = 100f;
         _secondaryAmmo = 0f;
         _attackPowerMultiplier = 1.5f;
-        _fieldOfView = 45;
+        _fieldOfView = BattleSettings.Instance._fighterFieldOfView;
     }
 
     public override void Fire(Transform enemy) {

@@ -13,6 +13,8 @@ public class BattleSettings : MonoBehaviour {
     public float _missileDamage;
     public float _medicHealingPower;
     public float _resupplyTime;
+    public float _fighterFieldOfView;
+    public float _leaderFieldOfView;
 
     public static BattleSettings Instance;
 	// Use this for initialization

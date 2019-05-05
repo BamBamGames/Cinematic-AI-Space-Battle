@@ -39,6 +39,7 @@ public class HQScript : MonoBehaviour {
             yield return new WaitForSeconds(_trySpawnInterval);
 
             if (_resources > _minFleetResouces) {
+                _resources -= 5f;
                 _fleetSpawner.SpawnFleet(_spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position, this);
             }
         }
