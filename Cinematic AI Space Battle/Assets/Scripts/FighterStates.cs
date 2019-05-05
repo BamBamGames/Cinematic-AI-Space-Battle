@@ -15,7 +15,8 @@ public class DecidingRole : State {
         }
 
         if ((ship = owner.GetComponent<Ship>()) is Leader) {
-            ship.GetComponent<Leader>().StartFleetSearch();
+            ship.GetComponent<Evasive>().enabled = true;
+            ship.GetComponent<Evasive>().ChooseDirectionOnce();
         }
 
         if ((ship = owner.GetComponent<Ship>()) is Commander) {
@@ -196,6 +197,22 @@ public class SearchingForBattle : State {
     public override void Think() {
         if (owner.GetComponent<Figther>().FightingEnemy()) {
             owner.GetComponent<StateMachine>().ChangeState(new Engaging());
+        }
+    }
+}
+
+public class SearchingForEnemyFleet : State {
+    public override void Enter() {
+        owner.GetComponent<Seek>().enabled = false;
+        owner.GetComponent<Leader>().StartFleetSearch();
+    }
+    public override void Exit() {
+        owner.GetComponent<Evasive>().enabled = false;
+        owner.GetComponent<Leader>().EndSearchForFleet();
+    }
+    public override void Think() {
+        if (owner.GetComponent<Leader>()._attackingFleet != null) {
+            owner.GetComponent<Leader>().EndSearchForFleet();
         }
     }
 }

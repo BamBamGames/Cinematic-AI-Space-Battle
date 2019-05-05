@@ -7,6 +7,7 @@ public class Leader : Ship {
     public List<Figther> _followers = new List<Figther>();
     public float _avgDistanceBetweenFollowers;
     private bool _engagedInBattle;
+    private bool _readyToFight = false;
 
     IEnumerator _searchForFleet;
 
@@ -23,7 +24,18 @@ public class Leader : Ship {
         }
         CalculateDistanceBetweenFollowers();
         RegulateSpeed();
+
+        if (!_readyToFight) {
+            CheckDistanceFromHQ();
+        }
 	}
+
+    private void CheckDistanceFromHQ() {
+        if (Vector3.Distance(transform.position, _hq.transform.position) > 200){
+            _readyToFight = true;
+            _stateMachine.ChangeState(new SearchingForEnemyFleet());
+        }
+    }
 
     private void CalculateDistanceBetweenFollowers() {
         float sum = 0;
@@ -38,7 +50,7 @@ public class Leader : Ship {
         if (_avgDistanceBetweenFollowers >= 22f && GetComponent<Boid>().maxSpeed > 5f) {
             GetComponent<Boid>().maxSpeed -= 0.02f;
         } else {
-            GetComponent<Boid>().maxSpeed = 10f;
+            GetComponent<Boid>().maxSpeed = _maxSpeed;
         }
     }
 
@@ -83,6 +95,7 @@ public class Leader : Ship {
         _fleet.AddLeader(this);
         _fleet.AddFighters(_followers);
         BattleFieldManager.Instance.AddFleet(_fleet, _team);
+        //_fleet.AddFleetCamerasToManager();
         Debug.Log("Finished spawning fleet");
     }
 
@@ -104,7 +117,7 @@ public class Leader : Ship {
         newFollower.transform.position = transform.TransformPoint(pos);
         newFollower.transform.localRotation = transform.localRotation;
         fighter._fleet = _fleet;
-        fighter.SetTeam(_team);
+        fighter.SetTeamandHQ(_team,_hq);
         fighter.SetLeader(this);
         _followers.Add(fighter);
     }
@@ -130,9 +143,11 @@ public class Leader : Ship {
     public void ChooseFleetToAttack() {
         _attackingFleet = BattleFieldManager.Instance.ChooseNewFleet(this, false);
 
+        /*
         if (_attackingFleet == null) {
             _attackingFleet = BattleFieldManager.Instance.ChooseNewFleet(this, true);
         }
+        */
 
         if (_attackingFleet == null) {
             _stateMachine.ChangeState(new SeekingHQ());

@@ -82,4 +82,10 @@ public class Fleet : MonoBehaviour {
         return _allShips;
     }
 
+    public void AddFleetCamerasToManager() {
+        foreach (GameObject g in _allShips) {
+            g.GetComponent<Ship>().AddCameraToManager(); 
+        }
+    }
+
 }

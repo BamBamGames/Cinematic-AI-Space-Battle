@@ -22,9 +22,9 @@ public class ShipCamera : MonoBehaviour {
         Camera physicalCam = go.AddComponent<Camera>();
         //physicalCam.transform.parent = target;
         physicalCam.transform.localRotation = target.rotation;
-        physicalCam.fieldOfView = 80f;
+        physicalCam.fieldOfView = 60f;
         PostProcessingBehaviour pp = go.AddComponent<PostProcessingBehaviour>();
-        pp.profile = CameraEffects.Instance.postProcessingProfile;
+        //pp.profile = CameraEffects.Instance.postProcessingProfile;
         camera._target = target;
         //camera._tragetPos = targetPos;
         camera._tragetPos = go.transform.position = target.transform.position - target.transform.forward * 7f;
@@ -48,5 +48,19 @@ public class ShipCamera : MonoBehaviour {
         transform.LookAt(_target);
 
         transform.position = Vector3.Lerp(transform.position, _tragetPos,Time.deltaTime * _lerpSpeed);
+    }
+
+    public void AutoDestroy() {
+        StartCoroutine(DestroyDelay());
+    }
+
+    IEnumerator DestroyDelay() {
+        while (true) {
+            yield return new WaitForSeconds(2f);
+
+            Destroy(this);
+
+
+        }
     }
 }

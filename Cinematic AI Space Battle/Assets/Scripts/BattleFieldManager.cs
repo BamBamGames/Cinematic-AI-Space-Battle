@@ -85,6 +85,11 @@ public class BattleFieldManager : MonoBehaviour {
             _fleetPairs.Add(new FleetPair(choosingLeader._fleet, choosingLeader._attackingFleet));
         }
 
+        if (optimalFleet != null) {
+            optimalFleet._inBattle = true;
+            //choosingLeader._fleet._inBattle = true;
+        }
+
         return optimalFleet;
     }
     

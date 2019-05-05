@@ -4,8 +4,9 @@ using UnityEngine;
 
 public abstract class Ship : MonoBehaviour {
 
-    private ShipCamera _cameraFollowing;
-    private ShipCamera _firstPersonCamera;
+    private bool _addedCamerasToManager = false;
+    public ShipCamera _cameraFollowing;
+    public ShipCamera _firstPersonCamera;
 
     public List<GameObject> _blasters = new List<GameObject>();
 
@@ -33,6 +34,8 @@ public abstract class Ship : MonoBehaviour {
     public AudioSource _engineSource;
     public AudioSource _explosionSource;
     public AudioSource _blasterSource;
+
+    public HQScript _hq;
 
     // Use this for initialization
     public void Start() {
@@ -76,6 +79,28 @@ public abstract class Ship : MonoBehaviour {
         GetComponent<StateMachine>().ChangeState(new DecidingRole());
         _targetingRoutine = Targeting();
         StartCoroutine(_targetingRoutine);
+
+        SetSpeeds();
+    }
+
+    private void SetSpeeds() {
+        Boid boid = GetComponent<Boid>();
+        if (this is Figther) {
+            _maxSpeed = BattleSettings.Instance._fighterSpeed;
+            boid.maxSpeed = _maxSpeed;
+        }
+        if (this is Medic) {
+            _maxSpeed = BattleSettings.Instance._medicSpeed;
+           boid.maxSpeed = _maxSpeed;
+        }
+        if (this is Commander) {
+            _maxSpeed = BattleSettings.Instance._commanderSpeed;
+            boid.maxSpeed = _maxSpeed;
+        }
+        if (this is Leader) {
+            _maxSpeed = BattleSettings.Instance._leaderSpeed;
+            boid.maxSpeed = _maxSpeed;
+        }
     }
 
     public void OnDisable() {
@@ -84,6 +109,12 @@ public abstract class Ship : MonoBehaviour {
 
     // Update is called once per frame
     public void Update() {
+
+        if (!_addedCamerasToManager && _cameraFollowing != null) {
+            AddCameraToManager();
+            _addedCamerasToManager = true;
+        }
+
         if (_attackingFleet != null) {
             Targeting();
         }
@@ -133,7 +164,11 @@ public abstract class Ship : MonoBehaviour {
             _fleet.RemoveShip(gameObject);
 
             CameraManager.Instance.RemoveCamera(_cameraFollowing.GetComponent<Camera>());
-            Destroy(_cameraFollowing.gameObject);
+            if (_cameraFollowing.isActiveAndEnabled) {
+                _cameraFollowing.GetComponent<ShipCamera>().AutoDestroy();
+            } else {
+                Destroy(_cameraFollowing.GetComponent<ShipCamera>());
+            }
             if (_firstPersonCamera != null) {
                 CameraManager.Instance._cameras.Remove(_firstPersonCamera.GetComponent<Camera>());
                 Destroy(_firstPersonCamera.gameObject);
@@ -168,8 +203,9 @@ public abstract class Ship : MonoBehaviour {
     /// </summary>
     protected abstract void SetShipStats();
 
-    public void SetTeam(Team team) {
+    public void SetTeamandHQ(Team team,HQScript hq) {
         _team = team;
+        _hq = hq;
     }
 
     public float _TargetingInterval = 0.2f;
@@ -210,15 +246,22 @@ public abstract class Ship : MonoBehaviour {
             Debug.Log("HIT");
             _life -= other.GetComponent<Bullet>().GetDamage();
             other.gameObject.SetActive(false);
+            GameObject spark = Instantiate(VFXManager.Instance._sparksHit);
+            //smoke.transform.parent = transform;
+            spark.transform.position = transform.position;
         } else if (_team == Team.green && other.tag == "RedBullet") {
             Debug.Log("HIT");
             _life -= other.GetComponent<Bullet>().GetDamage();
             other.gameObject.SetActive(false);
+            GameObject spark = Instantiate(VFXManager.Instance._sparksHit);
+            //smoke.transform.parent = transform;
+            spark.transform.position = transform.position;
+
         }
     }
 
-    protected float _blasterForce = 1200f;
-    protected float _blasterDamage = 10f;
+    protected float _blasterForce = BattleSettings.Instance._bulletSpeed;
+    protected float _blasterDamage = BattleSettings.Instance._blasterDamage;
 
     public void ShootBlaster(float multiplier, Transform enemy) {
         Rigidbody rb;
@@ -261,7 +304,10 @@ public abstract class Ship : MonoBehaviour {
         }
     }
 
-
+    public void AddCameraToManager() {
+        Debug.Log("Added camera to spawner" + gameObject);
+        CameraManager.Instance.AddCamera(_cameraFollowing.GetComponent<Camera>());
+    }
 
     public abstract void Fire(Transform enemy);
 }

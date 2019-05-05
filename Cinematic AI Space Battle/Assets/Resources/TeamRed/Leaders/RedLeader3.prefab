@@ -448,7 +448,7 @@ MonoBehaviour:
   weight: 0.5
   force: {x: 0, y: 0, z: 0}
   boid: {fileID: 0}
-  distance: 10
+  distance: 15
   radius: 5
   jitter: 100
   evasiveType: 0
@@ -481,6 +481,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5bcd6292fd08a4c83b8b99b689e7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraFollowing: {fileID: 0}
+  _firstPersonCamera: {fileID: 0}
   _blasters: []
   _life: 0
   _armomr: 0
@@ -498,6 +500,7 @@ MonoBehaviour:
   _engineSource: {fileID: 0}
   _explosionSource: {fileID: 0}
   _blasterSource: {fileID: 0}
+  _hq: {fileID: 0}
   _TargetingInterval: 0.2
   _followers: []
   _avgDistanceBetweenFollowers: 0

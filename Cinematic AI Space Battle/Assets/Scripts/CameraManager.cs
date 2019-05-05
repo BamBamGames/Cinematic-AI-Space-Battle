@@ -60,7 +60,9 @@ public class CameraManager : MonoBehaviour {
 	}
 
     bool breakingFromCorouting = false;
+
     public void GetAllCameras() {
+        Debug.Log("Got all camera");
         breakingFromCorouting = true;
         StopCoroutine(_cameraCouroutine);
         breakingFromCorouting = false;
@@ -78,6 +80,7 @@ public class CameraManager : MonoBehaviour {
     private void DisableAllButEnalbed() {
         foreach (Camera cam in _cameras) {
             if (!cam.Equals(_enabled)) {
+                
                 cam.gameObject.SetActive(false);
             }
         }
@@ -90,11 +93,17 @@ public class CameraManager : MonoBehaviour {
         }
         _enabled = _cameras[Random.Range(0, _cameras.Count)];
         _enabled.gameObject.SetActive(true);
+        DisableAllButEnalbed();
     }
 
     public void RemoveCamera(Camera cam) {
-        StopCoroutine(_cameraCouroutine);
+        //StopCoroutine(_cameraCouroutine);
         _cameras.Remove(cam);
-        StartCoroutine(_cameraCouroutine);
+        //StartCoroutine(_cameraCouroutine);
+    }
+
+    public void AddCamera(Camera cam) {
+        _cameras.Add(cam);
+        DisableAllButEnalbed();
     }
 }

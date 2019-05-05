@@ -19,21 +19,18 @@ public class FleetSpawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            
-            SpawnFleet(transform.position);
-        }
+        
 	}
 
     bool _refreshCameras = false;
 
-    private void SpawnFleet(Vector3 pos) {
+    public void SpawnFleet(Vector3 pos, HQScript hq) {
         
         GameObject[] leaders = Resources.LoadAll<GameObject>(resourceFolder+"/Leaders");
 
         GameObject leaderOb = Instantiate(leaders[Random.Range(0, leaders.Length)]);
         Leader leader = leaderOb.GetComponent<Leader>();
-        leader.SetTeam(team);
+        leader.SetTeamandHQ(team, hq);
 
         leader.transform.position = pos;
 
@@ -48,7 +45,8 @@ public class FleetSpawner : MonoBehaviour {
 
     private void LateUpdate() {
         if (_refreshCameras) {
-            CameraManager.Instance.GetAllCameras();
+            //CameraManager.Instance.GetAllCameras();
+            //CameraManager.Instance.AddCamera();
             _refreshCameras = false;
         }
     }

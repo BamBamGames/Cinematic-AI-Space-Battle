@@ -10,19 +10,39 @@ public class HQScript : MonoBehaviour {
     private List<Camera> _defendingCameras = new List<Camera>();
     private List<GameObject> _guns = new List<GameObject>();
     private Camera _camera;
+    private FleetSpawner _fleetSpawner;
+    IEnumerator _spawning;
+    public float _trySpawnInterval = 5f;
+    public float _minFleetResouces = 5f;
+    public float _minMedicResource = 5f;
+    public Team team;
 	// Use this for initialization
 	void Start () {
         GetSpawnPoints();
         GetDefendingCameras();
         GetGuns();
-
-
+        _fleetSpawner = GetComponent<FleetSpawner>();
+        _fleetSpawner.transform.localRotation = transform.localRotation;
+        _fleetSpawner.team = team;
+        _spawning = Spawning();
+        StartCoroutine(_spawning);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    IEnumerator Spawning() {
+        while (true) {
+
+            yield return new WaitForSeconds(_trySpawnInterval);
+
+            if (_resources > _minFleetResouces) {
+                _fleetSpawner.SpawnFleet(_spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position, this);
+            }
+        }
+    }
 
     private void GetMainCamera() {
         foreach (Transform t in transform) {
