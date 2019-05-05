@@ -1,0 +1,150 @@
+fileFormatVersion: 2
+guid: 44b8d0dc5c6f1e1469a5a5405938a660
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: B5-InsetDetails
+    100002: B5-ReactorAnchor
+    100004: B5-SolidGray
+    100006: B5_cdb_bayrim
+    100008: B5_cdb_bl0
+    100010: B5_cdb_bl1
+    100012: B5_cdb_pan
+    100014: B5_outsetd
+    100016: B5_solidgr
+    100018: default
+    100020: //RootNode
+    400000: B5-InsetDetails
+    400002: B5-ReactorAnchor
+    400004: B5-SolidGray
+    400006: B5_cdb_bayrim
+    400008: B5_cdb_bl0
+    400010: B5_cdb_bl1
+    400012: B5_cdb_pan
+    400014: B5_outsetd
+    400016: B5_solidgr
+    400018: default
+    400020: //RootNode
+    2100000: B5-InsetDetailsMat
+    2100002: B5-ReactorAnchorMat
+    2100004: B5-SolidGrayMat
+    2100006: B5_cdb_bayrimMat
+    2100008: B5_cdb_bl0Mat
+    2100010: B5_cdb_bl1Mat
+    2100012: B5_cdb_panMat
+    2100014: B5_outsetdMat
+    2100016: B5_solidgrMat
+    2100018: defaultMat
+    2300000: B5-InsetDetails
+    2300002: B5-ReactorAnchor
+    2300004: B5-SolidGray
+    2300006: B5_cdb_bayrim
+    2300008: B5_cdb_bl0
+    2300010: B5_cdb_bl1
+    2300012: B5_cdb_pan
+    2300014: B5_outsetd
+    2300016: B5_solidgr
+    2300018: default
+    3300000: B5-InsetDetails
+    3300002: B5-ReactorAnchor
+    3300004: B5-SolidGray
+    3300006: B5_cdb_bayrim
+    3300008: B5_cdb_bl0
+    3300010: B5_cdb_bl1
+    3300012: B5_cdb_pan
+    3300014: B5_outsetd
+    3300016: B5_solidgr
+    3300018: default
+    4300000: B5-InsetDetails
+    4300002: B5-ReactorAnchor
+    4300004: B5-SolidGray
+    4300006: B5_cdb_bayrim
+    4300008: B5_cdb_bl0
+    4300010: B5_cdb_bl1
+    4300012: B5_cdb_pan
+    4300014: B5_outsetd
+    4300016: B5_solidgr
+    4300018: default
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

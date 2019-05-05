@@ -16,6 +16,7 @@ public abstract class Ship : MonoBehaviour {
     public float _secondaryAmmo;
     public float _attackPowerMultiplier;
     public float _fieldOfView;
+    protected bool _fighting = false;
 
     public float _maxSpeed = 10f;
 
@@ -29,8 +30,44 @@ public abstract class Ship : MonoBehaviour {
 
     public Team _team;
 
+    public AudioSource _engineSource;
+    public AudioSource _explosionSource;
+    public AudioSource _blasterSource;
+
     // Use this for initialization
     public void Start() {
+        if (GetComponent<AudioSource>() != null) {
+            Destroy(GetComponent<AudioSource>());
+        }
+
+        _engineSource = gameObject.AddComponent<AudioSource>();
+        _engineSource.loop = true;
+        _engineSource.clip = AudiSourceManager.Instance._engine;
+        _engineSource.spatialBlend = 1f;
+        _engineSource.volume = 0.4f;
+        _engineSource.rolloffMode = AudioRolloffMode.Linear;
+        _engineSource.minDistance = 1f;
+        _engineSource.maxDistance = 15f;
+        _engineSource.Play(0);
+
+        _explosionSource = gameObject.AddComponent<AudioSource>();
+        _explosionSource.loop = false;
+        _explosionSource.clip = AudiSourceManager.Instance._explosion;
+        _explosionSource.spatialBlend = 1f;
+        _explosionSource.volume = 0.8f;
+        _explosionSource.rolloffMode = AudioRolloffMode.Linear;
+        _explosionSource.minDistance = 1f;
+        _explosionSource.maxDistance = 400f;
+
+        _blasterSource = gameObject.AddComponent<AudioSource>();
+        _blasterSource.loop = false;
+        _blasterSource.clip = AudiSourceManager.Instance._blaster;
+        _blasterSource.spatialBlend = 1f;
+        _blasterSource.volume = 0.4f;
+        _blasterSource.rolloffMode = AudioRolloffMode.Linear;
+        _blasterSource.minDistance = 1f;
+        _blasterSource.maxDistance = 20f;
+
         GetBlasters();
         SetShipStats();
         SetFpsCamera();
@@ -52,19 +89,58 @@ public abstract class Ship : MonoBehaviour {
         }
 
         CheckLife();
+
+        
     }
 
+    private bool _smoking = false;
+    private void ShipSmoke() {
+        GameObject smoke = Instantiate(VFXManager.Instance._shipSmoke);
+        smoke.transform.parent = transform;
+        smoke.transform.localPosition = new Vector3(0, 0, 0);
+
+    }
+
+    private bool _onFire = false;
+    private void ShipFire() {
+        GameObject smoke = Instantiate(VFXManager.Instance._shipFire);
+        smoke.transform.parent = transform;
+        smoke.transform.localPosition = new Vector3(0, 0, 0);
+    }
+
+    private void ShipExplosion() {
+        GameObject smoke = Instantiate(VFXManager.Instance._shipExplosion);
+        //smoke.transform.parent = transform;
+        smoke.transform.position = transform.position;
+        _explosionSource.Play(0);
+    }
+
+
     private void CheckLife() {
+
+        if (!_smoking && _life <= 60) {
+            _smoking = true;
+            ShipSmoke();
+        }
+
+        if (!_onFire && _life <= 30) {
+            _onFire = true;
+            ShipFire();
+        }
+
         if (_life <= 0) {
             CleanUpBeforeDestroy();
             _fleet.RemoveShip(gameObject);
 
-            CameraManager.Instance._cameras.Remove(_cameraFollowing.GetComponent<Camera>());
+            CameraManager.Instance.RemoveCamera(_cameraFollowing.GetComponent<Camera>());
             Destroy(_cameraFollowing.gameObject);
             if (_firstPersonCamera != null) {
                 CameraManager.Instance._cameras.Remove(_firstPersonCamera.GetComponent<Camera>());
                 Destroy(_firstPersonCamera.gameObject);
             }
+
+            ShipExplosion();
+
             Destroy(gameObject);
         }
     }
@@ -96,7 +172,7 @@ public abstract class Ship : MonoBehaviour {
         _team = team;
     }
 
-    public float _TargetingInterval = 0.5f;
+    public float _TargetingInterval = 0.2f;
     IEnumerator _targetingRoutine;
 
     IEnumerator Targeting() {
@@ -108,14 +184,15 @@ public abstract class Ship : MonoBehaviour {
 
                     if (Vector3.Distance(enemy.transform.position, transform.position) < 40) {
 
-                        Debug.Log("Enemy Closer than 40");
+                        //Debug.Log("Enemy Closer than 40");
                         Vector3 targetDir = enemy.transform.position - transform.position;
                         float angleToPlayer = (Vector3.Angle(targetDir, transform.forward));
 
                         if (angleToPlayer >= -_fieldOfView && angleToPlayer <= _fieldOfView) {
 
-                            Debug.Log("Player in sight!");
+                            //Debug.Log("Player in sight!");
                             Fire(enemy.transform);
+                            _blasterSource.Play(0);
                             break;
                         }
                     }
@@ -140,8 +217,8 @@ public abstract class Ship : MonoBehaviour {
         }
     }
 
-    protected float _blasterForce = 950f;
-    protected float _blasterDamage = 3f;
+    protected float _blasterForce = 1200f;
+    protected float _blasterDamage = 10f;
 
     public void ShootBlaster(float multiplier, Transform enemy) {
         Rigidbody rb;
@@ -183,6 +260,8 @@ public abstract class Ship : MonoBehaviour {
             }
         }
     }
+
+
 
     public abstract void Fire(Transform enemy);
 }

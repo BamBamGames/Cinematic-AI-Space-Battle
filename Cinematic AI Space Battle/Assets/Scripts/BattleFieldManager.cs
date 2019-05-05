@@ -11,9 +11,12 @@ public class BattleFieldManager : MonoBehaviour {
     public List<Fleet> _greenFleets = new List<Fleet>();
     public List<Fleet> _redFleets = new List<Fleet>();
     public float _distanceWeightDecision = 10f;
+    public float _distanceBeforeFleetEngage = 50f;
 
     public GameObject _greenHQ;
     public GameObject _redHQ;
+
+    private List<FleetPair> _fleetPairs = new List<FleetPair>();
 
     public static BattleFieldManager Instance;
 	// Use this for initialization
@@ -23,10 +26,29 @@ public class BattleFieldManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        CheckFleetPairState();
 	}
 
-    
+    private void CheckFleetPairState() {
+        foreach (FleetPair pair in _fleetPairs) {
+            if (!pair.IsEngaged()) {
+                if (Vector3.Distance(pair.GetFirstFleet().GetAveragePosition(), pair.GetSecondFleet().GetAveragePosition()) < _distanceBeforeFleetEngage) {
+                    pair.Engaged();
+                    InitiateEngagementBetweenFleets(pair);
+                }
+            }
+        }
+    }
+
+    private void InitiateEngagementBetweenFleets(FleetPair pair) {
+        float fOneFightersCount = pair.GetFirstFleet()._fleetFighters.Count;
+        float fTwoFightersCount = pair.GetSecondFleet()._fleetFighters.Count;
+
+        float minFighers = Mathf.Min(fOneFightersCount, fTwoFightersCount);
+
+        //for(int i = 0; i <)
+    }
+
     public Fleet ChooseNewFleet(Leader choosingLeader, bool battleState) {
 
         Fleet optimalFleet = null;
@@ -56,6 +78,11 @@ public class BattleFieldManager : MonoBehaviour {
                 }
             }
 
+        }
+
+        //Adds a fleet pair for the battle manager to store
+        if (choosingLeader._fleet != null && choosingLeader._attackingFleet != null) {
+            _fleetPairs.Add(new FleetPair(choosingLeader._fleet, choosingLeader._attackingFleet));
         }
 
         return optimalFleet;

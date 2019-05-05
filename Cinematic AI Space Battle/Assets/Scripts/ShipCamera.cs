@@ -10,6 +10,7 @@ public class ShipCamera : MonoBehaviour {
 
     protected Transform _target;
     protected Vector3 _tragetPos;
+    protected AudioListener audioListener;
 
     private float _lerpSpeed = 10f;
 
@@ -27,6 +28,7 @@ public class ShipCamera : MonoBehaviour {
         camera._target = target;
         //camera._tragetPos = targetPos;
         camera._tragetPos = go.transform.position = target.transform.position - target.transform.forward * 7f;
+        camera.audioListener = camera.gameObject.AddComponent<AudioListener>();
 
         return camera;
     }

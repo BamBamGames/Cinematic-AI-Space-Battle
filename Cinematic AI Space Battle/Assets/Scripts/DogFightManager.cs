@@ -13,6 +13,14 @@ public class DogFightManager : MonoBehaviour {
     public float _avgDistance = float.MaxValue;
     private float _distanceBeforeStartFight = 20f;
     private float _fightingDistance = 30f;
+
+    public static DogFightManager Create(GameObject part1, GameObject part2) {
+        DogFightManager dogFight = new GameObject().AddComponent<DogFightManager>();
+
+        dogFight._participant1 = part1;
+        dogFight._participant2 = part2;
+        return dogFight;
+    }
 	// Use this for initialization
 	void Start () {
 		

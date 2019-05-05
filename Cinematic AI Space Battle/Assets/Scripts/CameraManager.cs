@@ -48,7 +48,9 @@ public class CameraManager : MonoBehaviour {
         while (true) {
 
             yield return new WaitForSeconds(_randomInterval);
-            SwitchRandomCamera();
+            if (!breakingFromCorouting) {
+                SwitchRandomCamera();
+            }
         }
     }
 	
@@ -57,15 +59,13 @@ public class CameraManager : MonoBehaviour {
 		
 	}
 
+    bool breakingFromCorouting = false;
     public void GetAllCameras() {
+        breakingFromCorouting = true;
         StopCoroutine(_cameraCouroutine);
+        breakingFromCorouting = false;
         //_cameras.Clear();
         Camera[] cams = Camera.allCameras;
-        try {
-            _enabled = cams[Random.Range(0, cams.Length)];
-        } catch {
-            return;
-        }
         Debug.Log(cams.Length);
 
         foreach (Camera cam in cams) {
@@ -90,5 +90,11 @@ public class CameraManager : MonoBehaviour {
         }
         _enabled = _cameras[Random.Range(0, _cameras.Count)];
         _enabled.gameObject.SetActive(true);
+    }
+
+    public void RemoveCamera(Camera cam) {
+        StopCoroutine(_cameraCouroutine);
+        _cameras.Remove(cam);
+        StartCoroutine(_cameraCouroutine);
     }
 }

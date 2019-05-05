@@ -6,6 +6,7 @@ public class Leader : Ship {
 
     public List<Figther> _followers = new List<Figther>();
     public float _avgDistanceBetweenFollowers;
+    private bool _engagedInBattle;
 
     IEnumerator _searchForFleet;
 
@@ -161,5 +162,14 @@ public class Leader : Ship {
 
     public override void CleanUpBeforeDestroy() {
         throw new System.NotImplementedException();
+    }
+
+
+    public void OrderFollowersToDogFight() {
+
+        foreach (Figther f in _followers) {
+
+        }
+
     }
 }
