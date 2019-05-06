@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//Base class for ships
 public abstract class Ship : MonoBehaviour {
 
     private bool _addedCamerasToManager = false;

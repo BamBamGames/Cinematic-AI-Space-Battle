@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Used to manage pairs of fleets, in battle
+
 public class FleetPair : MonoBehaviour{
 
     public  Fleet _pair1;

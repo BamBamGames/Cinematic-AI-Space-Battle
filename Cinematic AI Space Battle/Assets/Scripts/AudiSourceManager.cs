@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Manages the audio files that can be used throughout the AI battle
 public class AudiSourceManager : MonoBehaviour {
 
     public AudioClip _engine;

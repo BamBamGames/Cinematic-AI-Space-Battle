@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+//A singleton that runs accross all scenes and stays alive to amange the run time, sounds , screen fading and scene switching A direction :)
 public class SceneDirector : MonoBehaviour {
 
     public GameObject _audioTrack;

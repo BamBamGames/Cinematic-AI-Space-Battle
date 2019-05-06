@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Leader specific states for FSM
+
 public class ChasingFleet : State {
     public override void Enter() {
         Debug.Log("Entered Chasing Fleet State" + owner);
@@ -36,3 +38,5 @@ public class SearchingForEnemyFleet : State {
         }
     }
 }
+
+//More to be added later for RTS purposes

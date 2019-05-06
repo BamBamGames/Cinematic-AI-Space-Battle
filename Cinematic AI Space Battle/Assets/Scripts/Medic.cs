@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Will be implented later for rts purposes
 public class Medic : Ship {
 
     // Use this for initialization

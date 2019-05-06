@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//Used to manage a fleet of ships
 public class Fleet : MonoBehaviour {
 
     public List<GameObject> _allShips = new List<GameObject>();

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Class responsible for managing the battlefield
 public class BattleFieldManager : MonoBehaviour {
-
+	
+	//Stores the following data to be accessed in one place
     public List<Leader> _greenLeaders = new List<Leader>();
     public List<Leader> _redLeaders = new List<Leader>();
     public Commander _greenCommander;
@@ -24,6 +26,7 @@ public class BattleFieldManager : MonoBehaviour {
         Instance = this;
 	}
 
+	//Finds a fleet to join
     public Fleet FindNewFleetToJoin(Figther fighter) {
         Fleet newFleet = null;
         float _totalHealth = float.MaxValue;
@@ -36,10 +39,20 @@ public class BattleFieldManager : MonoBehaviour {
                 }
             }
         }
+		
+		if (fighter._team == Team.green) {
+            foreach (Fleet f in _greenFleets) {
+                //Checks if fleet is not in battle
+                if (f._totalHealth < _totalHealth) {
+                    newFleet = f;
+                }
+            }
+        }
 
         return newFleet;
     }
 
+	//A leader choses a fleet to battle that has already spawned and is either in battle or not 
     public Fleet ChooseNewFleet(Leader choosingLeader, bool battleState) {
 
         Fleet optimalFleet = null;
@@ -87,7 +100,8 @@ public class BattleFieldManager : MonoBehaviour {
         return optimalFleet;
     }
     
-
+	
+	//Adds a commander to the battle
     public void AddCommander(Commander commander, Team team) {
         if (team == Team.red) {
             _redCommander = commander;
@@ -95,7 +109,7 @@ public class BattleFieldManager : MonoBehaviour {
             _greenCommander = commander;
         }
     }
-
+	
     public void AddLeader(Leader leader, Team team) {
         if (team == Team.red) {
             _redLeaders.Add(leader);
@@ -111,7 +125,8 @@ public class BattleFieldManager : MonoBehaviour {
             _greenFleets.Add(fleet);
         }
     }
-
+	
+	//Gets the opposing hq
     public GameObject GetOpponentHQ(Team team) {
 
         if (team == Team.red) {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+///Used to escape from an enemy
 public class Escape : SteeringBehaviour {
     public GameObject targetGameObject = null;
     public Vector3 target = Vector3.zero;

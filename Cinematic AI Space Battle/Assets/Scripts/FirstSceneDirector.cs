@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//used to setup and run the first scripted cinematic scene 
+
 public class FirstSceneDirector : MonoBehaviour {
 
     public static FirstSceneDirector Instance;

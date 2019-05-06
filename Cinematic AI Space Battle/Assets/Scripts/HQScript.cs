@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Used to manage a base
 public class HQScript : MonoBehaviour {
 
     public float _resources;

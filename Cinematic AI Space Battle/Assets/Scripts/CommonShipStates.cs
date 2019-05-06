@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Common ship states that all ships no matter of class can use
+
+//Decided what to do on spawn
 public class DecidingRole : State {
     public override void Enter() {
 
@@ -33,6 +36,7 @@ public class DecidingRole : State {
     }
 }
 
+//escapes from an enemy
 public class Escaping : State {
     public override void Enter() {
 
@@ -63,6 +67,7 @@ public class Escaping : State {
     }
 }
 
+//Seeks a HQ to attack
 public class SeekingHQ : State {
     public override void Enter() {
         owner.GetComponent<Seek>()._target = BattleFieldManager.Instance.GetOpponentHQ(owner.GetComponent<Ship>()._team).transform;
@@ -74,6 +79,9 @@ public class SeekingHQ : State {
 
     }
 }
+
+
+//////////////////Will be implemented later for RTS game purposes
 
 /// <summary>
 /// Going to enemy base to kill self and be a hero

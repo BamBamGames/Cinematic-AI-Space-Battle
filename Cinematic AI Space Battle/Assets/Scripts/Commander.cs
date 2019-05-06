@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Class will be implemented when I do further work on the project
 public class Commander : Ship {
 
 	// Use this for initialization

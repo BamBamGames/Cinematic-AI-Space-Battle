@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Spawns fleets
 public class FleetSpawner : MonoBehaviour {
 
     public Team team;

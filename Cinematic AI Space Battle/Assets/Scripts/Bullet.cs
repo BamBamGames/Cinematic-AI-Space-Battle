@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Acts as a bullet and carries out several functionalitys
 public class Bullet : MonoBehaviour {
 
     IEnumerator _bulletTimeOutRoutine;

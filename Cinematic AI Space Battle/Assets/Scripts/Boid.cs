@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Boid used from class, no need to reimplement
 public class Boid : MonoBehaviour
 {
     List<SteeringBehaviour> behaviours = new List<SteeringBehaviour>();

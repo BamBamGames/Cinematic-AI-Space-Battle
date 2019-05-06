@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PostProcessing;
 
+//Stores the post processing profile for access at runtime
 public class CameraEffects : MonoBehaviour {
 
     public PostProcessingProfile postProcessingProfile;

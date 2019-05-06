@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Used to manage a leader who extends Ship class
 public class Leader : Ship {
 
     public List<Figther> _followers = new List<Figther>();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Used to run and direct the last scene of the program
 public class EndSceneDirector : MonoBehaviour {
 
     public GameObject _ship;

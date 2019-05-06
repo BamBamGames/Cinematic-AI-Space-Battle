@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//States for fighter FSM, fighter specific states
+
 /// <summary>
 /// Following leader of the fleet
 /// </summary>
@@ -46,6 +48,31 @@ public class Chasing : State {
         
     }
 }
+
+
+/// <summary>
+/// Searching for new enemies to fight
+/// </summary>
+public class SearchingForBattle : State {
+    public override void Enter() {
+        Debug.Log("Leader Alive");
+        owner.GetComponent<Figther>().SearchForEnemiesToFight();
+        if (!owner.GetComponent<Figther>().LeaderAlive()) {
+            owner.GetComponent<Figther>()._stateMachine.ChangeState(new Escaping());
+        }
+    }
+    public override void Exit() {
+        owner.GetComponent<Figther>().StopSearchForEnemy();
+    }
+    public override void Think() {
+        if (owner.GetComponent<Figther>().FightingEnemy()) {
+            owner.GetComponent<StateMachine>().ChangeState(new Engaging());
+        }
+    }
+}
+
+
+///////////////Will be implemented later for RTS game purposes , skeleton established
 
 
 /// <summary>
@@ -95,26 +122,6 @@ public class FallingBack : State {
 }
 
 
-/// <summary>
-/// Searching for new enemies to fight
-/// </summary>
-public class SearchingForBattle : State {
-    public override void Enter() {
-        Debug.Log("Leader Alive");
-        owner.GetComponent<Figther>().SearchForEnemiesToFight();
-        if (!owner.GetComponent<Figther>().LeaderAlive()) {
-            owner.GetComponent<Figther>()._stateMachine.ChangeState(new Escaping());
-        }
-    }
-    public override void Exit() {
-        owner.GetComponent<Figther>().StopSearchForEnemy();
-    }
-    public override void Think() {
-        if (owner.GetComponent<Figther>().FightingEnemy()) {
-            owner.GetComponent<StateMachine>().ChangeState(new Engaging());
-        }
-    }
-}
 
 
 

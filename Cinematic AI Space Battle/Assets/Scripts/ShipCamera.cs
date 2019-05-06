@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.PostProcessing;
 using UnityEngine.Rendering;
 
+
+//Camera that follows the player 
 public class ShipCamera : MonoBehaviour {
 
     public static ShipCamera Instance;

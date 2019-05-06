@@ -36,7 +36,8 @@ public class AsteroidSpawner : MonoBehaviour {
     public int _minAsteroidSize = 50;
     public int _maxAsteroidSize = 400;
     public int _amountToSpawn = 100;
-
+	
+	//Spawns asteroids randomly in a defined shaped are (cube)
     private void RandomSpawnInBox() {
         int possibleTypes = _asteroidTypes.Count;
         for (int i = 0; i < _amountToSpawn; i++) {

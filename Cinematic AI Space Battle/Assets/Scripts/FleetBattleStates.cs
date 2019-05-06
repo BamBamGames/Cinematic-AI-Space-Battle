@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Battle states for fleets who are fighting eachother
+
 public class EscapeFight : State {
 
     public override void Enter() {
@@ -102,6 +104,8 @@ public class ScrambleFight : State {
 
     }
 }
+
+//For implementation later for RTS skeleton defined
 
 public class DogFight : State {
     public override void Enter() {

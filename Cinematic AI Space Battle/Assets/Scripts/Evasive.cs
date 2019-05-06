@@ -55,7 +55,9 @@ public class Evasive : SteeringBehaviour {
         return worldTarget - transform.position;
 
     }
-
+	
+	
+	///Randomly evades to create an effect of evasion
     IEnumerator EvasiveManuevers() {
 
         while (true) {

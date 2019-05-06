@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+//Modified this class to allow ships to avoid asteroids based on their relative position to the asteroid
 public class ObstacleAvoidance : SteeringBehaviour {
     public float scale = 4.0f;
     public float forwardFeelerDepth = 30;
@@ -114,7 +115,9 @@ public class ObstacleAvoidance : SteeringBehaviour {
             yield return new WaitForSeconds(1.0f / frontFeelerUpdatesPerSecond);
         }
     }
-
+	
+	
+	//Modified this to have the feelers be of defined side and facing direction up, do, left, right , up , front
     System.Collections.IEnumerator UpdateSideFeelers() {
         yield return new WaitForSeconds(Random.Range(0.0f, 0.5f));
         float angle = 45;
@@ -138,7 +141,9 @@ public class ObstacleAvoidance : SteeringBehaviour {
 
         Vector3 fromTarget = fromTarget = transform.position - info.point;
         float dist = Vector3.Distance(transform.position, info.point);
-
+		
+		
+		//Added two different ways a boid can avoid obstacles, realtive to their position to an asteroid and also in a random direction
         switch (forceType) {
             case ForceType.normal:
                 force = info.normal * (forwardFeelerDepth * scale / dist);

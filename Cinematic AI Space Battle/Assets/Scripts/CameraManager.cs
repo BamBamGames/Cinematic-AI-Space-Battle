@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PostProcessing;
 
+//Class is responsible for handling all new cameras added and removed from the scene
+//Also chooses cameras to swtich to during battle for cinematic and exiting effect
 public class CameraManager : MonoBehaviour {
 
     public List<Camera> _cameras = new List<Camera>();
@@ -61,7 +63,8 @@ public class CameraManager : MonoBehaviour {
 	}
 
     bool breakingFromCorouting = false;
-
+	
+	//Gets all cameras from the scene on load
     public void GetAllCameras() {
         Debug.Log("Got all camera");
         breakingFromCorouting = true;
@@ -77,7 +80,8 @@ public class CameraManager : MonoBehaviour {
         DisableAllButEnalbed();
         StartCoroutine(_cameraCouroutine);
     }
-
+	
+	//Disables all of the cameras in the scene apart from the enabled one
     private void DisableAllButEnalbed() {
         foreach (Camera cam in _cameras) {
             if (!cam.Equals(_enabled)) {
@@ -93,7 +97,8 @@ public class CameraManager : MonoBehaviour {
             }
         }
     }
-
+	
+	//Switches to a random camera
     public void SwitchRandomCamera() {
         try {
             _enabled.gameObject.SetActive(false);

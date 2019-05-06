@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+///Class used for managing 1 v 1 dog fights , will be implented later
+///Skeleton done
 public class DogFightManager : MonoBehaviour {
 
     public GameObject _participant1, _participant2;

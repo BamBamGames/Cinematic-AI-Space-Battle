@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Implemented from class, no need to reimplement
 public class FollowPath : SteeringBehaviour {
 
     public Paths path;

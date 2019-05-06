@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Singleton used throuhgout the program so u can set up the battle externaly
 public class BattleSettings : MonoBehaviour {
-
+	
     public float _fighterSpeed;
     public float _leaderSpeed;
     public float _commanderSpeed;
