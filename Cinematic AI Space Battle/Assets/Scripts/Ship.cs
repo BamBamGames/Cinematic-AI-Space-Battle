@@ -54,10 +54,10 @@ public abstract class Ship : MonoBehaviour {
         _engineSource.loop = true;
         _engineSource.clip = AudiSourceManager.Instance._engine;
         _engineSource.spatialBlend = 1f;
-        _engineSource.volume = 0.4f;
+        _engineSource.volume = 0.6f;
         _engineSource.rolloffMode = AudioRolloffMode.Linear;
         _engineSource.minDistance = 1f;
-        _engineSource.maxDistance = 20f;
+        _engineSource.maxDistance = 25f;
         _engineSource.Play(0);
 
         

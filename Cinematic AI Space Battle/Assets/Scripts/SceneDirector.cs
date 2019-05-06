@@ -37,10 +37,13 @@ public class SceneDirector : MonoBehaviour {
         Outro
     }
 
+    public static SceneDirector Instance;
+
     public Scene _currentScene = Scene.Intro;
 
     // Use this for initialization
     void Start () {
+        Instance = this;
        DontDestroyOnLoad(gameObject);
        DontDestroyOnLoad(_constantCanvas);
 
@@ -71,13 +74,13 @@ public class SceneDirector : MonoBehaviour {
         StartScreenFadeIn();
     }
 
-    private void StartScreenFadeIn() {
+    public void StartScreenFadeIn() {
         Debug.Log("StartSceenFadeIn");
         _screenFadeInFinished = false;
         StartCoroutine(_fadeScreenIn);
     }
 
-    private void StartScreenFadeOut() {
+    public void StartScreenFadeOut() {
         Debug.Log("StartSceenFadeOut");
         _screenFadeOutFinished = false;
         StartCoroutine(_fadeScreenOut);

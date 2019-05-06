@@ -26,4 +26,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Intro.unity
     guid: 9715747da4fea0d4cb945180e72d38e9
+  - enabled: 1
+    path: Assets/GreenWin.unity
+    guid: a12ef5a346726724780ee0f7f0e77d8c
+  - enabled: 1
+    path: Assets/RedWin.unity
+    guid: 73ef03d5ccca08c43b38ca25a48fb634
   m_configObjects: {}

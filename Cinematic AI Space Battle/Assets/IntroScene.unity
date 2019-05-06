@@ -956,6 +956,10 @@ Prefab:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1145750796606160, guid: 89157f54990fb744987f947dfbb5b4ea, type: 2}
+      propertyPath: m_TagString
+      value: RedHQ
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89157f54990fb744987f947dfbb5b4ea, type: 2}
   m_IsPrefabAsset: 0
@@ -2010,7 +2014,7 @@ GameObject:
   - component: {fileID: 1203807777}
   m_Layer: 0
   m_Name: HQGREEN
-  m_TagString: Untagged
+  m_TagString: GreenHQ
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
