@@ -16,10 +16,15 @@ public class FleetSpawner : MonoBehaviour {
             resourceFolder = "TeamRed";
         }
     }
-	
+    float _manualSpawned = 0;
 	// Update is called once per frame
 	void Update () {
-        
+        if (_manualSpawned < 1) {
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                SpawnFleet(transform.position, null);
+                _manualSpawned++;
+            }
+        }
 	}
 
     bool _refreshCameras = false;

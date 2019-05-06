@@ -93,4 +93,31 @@ public class Fleet : MonoBehaviour {
         _fleetLeader._stateMachine.ChangeState(new Escaping());
     }
 
+    public void ChaseFighters(List<Figther> otherFighters) {
+        if (otherFighters.Count < _fleetFighters.Count) {
+            int count = 0;
+            for (int i = count; i < otherFighters.Count; i++) {
+                _fleetFighters[i]._targetToFollow = otherFighters[i].transform;
+                _fleetFighters[i]._stateMachine.ChangeState(new Chasing());
+                count++;
+            }
+
+            for (int i = count; i < _fleetFighters.Count; i++) {
+                _fleetFighters[i]._targetToFollow = otherFighters[Random.Range(0,otherFighters.Count)].transform;
+                _fleetFighters[i]._stateMachine.ChangeState(new Chasing());
+            }
+
+        } else if (otherFighters.Count == _fleetFighters.Count) {
+            for (int i = 0; i < otherFighters.Count; i++) {
+                _fleetFighters[i]._targetToFollow = otherFighters[i].transform;
+                _fleetFighters[i]._stateMachine.ChangeState(new Chasing());
+            }
+        } else {
+            for (int i = 0; i < _fleetFighters.Count; i++) {
+                _fleetFighters[i]._targetToFollow = otherFighters[i].transform;
+                _fleetFighters[i]._stateMachine.ChangeState(new Chasing());
+            }
+        }
+    }
+
 }

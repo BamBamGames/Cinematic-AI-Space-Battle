@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 114725390671698958}
   - component: {fileID: 65369999375042984}
   - component: {fileID: 82656233514378138}
+  - component: {fileID: 114506287502366204}
   m_Layer: 0
   m_Name: GreenFigher3
   m_TagString: Untagged
@@ -455,6 +456,26 @@ MonoBehaviour:
   boid: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
   _target: {fileID: 0}
+--- !u!114 &114506287502366204
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1221912650402830}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de747ec62f7e50346882743cbc1f971a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 0.5
+  force: {x: 0, y: 0, z: 0}
+  boid: {fileID: 0}
+  distance: 15
+  radius: 5
+  jitter: 100
+  evasiveType: 0
+  intervalInSecondsManuever: 10
+  _randomTimeSecsMax: 10
 --- !u!114 &114539075906523122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -466,6 +487,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4795fc9657b3a3f44af323b1a4863e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraFollowing: {fileID: 0}
+  _firstPersonCamera: {fileID: 0}
   _blasters: []
   _life: 0
   _armomr: 0
@@ -483,6 +506,7 @@ MonoBehaviour:
   _engineSource: {fileID: 0}
   _explosionSource: {fileID: 0}
   _blasterSource: {fileID: 0}
+  _hq: {fileID: 0}
   _TargetingInterval: 0.5
 --- !u!114 &114725390671698958
 MonoBehaviour:

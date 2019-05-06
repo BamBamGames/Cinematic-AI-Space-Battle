@@ -8,6 +8,8 @@ public class Leader : Ship {
     public float _avgDistanceBetweenFollowers;
     private bool _engagedInBattle;
     private bool _readyToFight = false;
+    public bool _regulateSpeed = true;
+    public float _regulateSpeedDist = 15f;
 
     IEnumerator _searchForFleet;
 
@@ -23,7 +25,11 @@ public class Leader : Ship {
             UpdateChasingFleetPos();
         }
         CalculateDistanceBetweenFollowers();
-        RegulateSpeed();
+        if (_regulateSpeed) {
+            RegulateSpeed();
+        } else {
+            GetComponent<Boid>().maxSpeed = _maxSpeed;
+        }
 
         if (!_readyToFight) {
             CheckDistanceFromHQ();
@@ -31,8 +37,12 @@ public class Leader : Ship {
 	}
 
     private void CheckDistanceFromHQ() {
-        if (Vector3.Distance(transform.position, _hq.transform.position) > 200){
-            _readyToFight = true;
+        if (_hq != null) {
+            if (Vector3.Distance(transform.position, _hq.transform.position) > 200) {
+                _readyToFight = true;
+                _stateMachine.ChangeState(new SearchingForEnemyFleet());
+            }
+        } else {
             _stateMachine.ChangeState(new SearchingForEnemyFleet());
         }
     }
@@ -47,7 +57,7 @@ public class Leader : Ship {
     }
 
     private void RegulateSpeed() {
-        if (_avgDistanceBetweenFollowers >= 22f && GetComponent<Boid>().maxSpeed > 5f) {
+        if (_avgDistanceBetweenFollowers >= _regulateSpeedDist && GetComponent<Boid>().maxSpeed > 5f) {
             GetComponent<Boid>().maxSpeed -= 0.02f;
         } else {
             GetComponent<Boid>().maxSpeed = _maxSpeed;
@@ -55,7 +65,7 @@ public class Leader : Ship {
     }
 
     protected override void SetShipStats() {
-        _life = 300;
+        _life = 500;
         _armomr = 200f;
         _fuel = 250;
         _primaryAmmo = 250f;
@@ -64,7 +74,10 @@ public class Leader : Ship {
         _fieldOfView = BattleSettings.Instance._leaderFieldOfView;
     }
 
-
+    public void GetRandomTarget(List<Figther> fighters) {
+        _targetToFollow = fighters[Random.Range(0, fighters.Count)].transform;
+        _stateMachine.ChangeState(new Chasing());
+    }
 
     public void SpawnFleet(int numberInFleet) {
 
@@ -176,7 +189,10 @@ public class Leader : Ship {
     }
 
     public override void CleanUpBeforeDestroy() {
-        throw new System.NotImplementedException();
+        Debug.Log("Cleaned up" + this + " Life at" + _life);
+
+        Destroy(_fleet);
+        //_leader._followers.Remove(this);
     }
 
 

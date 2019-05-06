@@ -4,71 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class DecidingRole : State {
-    public override void Enter() {
-
-        Ship ship;
-
-        if ((ship = owner.GetComponent<Ship>()) is Figther) {
-            ship.GetComponent<StateMachine>().ChangeState(new FollowingLeader());
-        }
-
-        if ((ship = owner.GetComponent<Ship>()) is Leader) {
-            ship.GetComponent<Evasive>().enabled = true;
-            ship.GetComponent<Evasive>().ChooseDirectionOnce();
-        }
-
-        if ((ship = owner.GetComponent<Ship>()) is Commander) {
-
-        }
-    }
-
-    public override void Exit() {
-        Ship ship;
-
-        if ((ship = owner.GetComponent<Ship>()) is Leader) {
-            ship.GetComponent<Leader>().EndSearchForFleet();
-        }
-    }
-    public override void Think() {
-
-    }
-}
-
-public class Escaping : State {
-    public override void Enter() {
-        Debug.Log("Entered Escaping State");
-        owner.GetComponent<Evasive>().enabled = true;
-        owner.GetComponent<Escape>().enabled = true;
-        owner.GetComponent<Escape>().weight = 0.1f;
-        owner.GetComponent<Evasive>().weight = 0.7f;
-        owner.GetComponent<Evasive>().StartEvasiveManuevers(Random.Range(0,3));
-        owner.GetComponent<Boid>().maxSpeed = owner.GetComponent<Ship>()._maxSpeed * 0.6f;
-        owner.GetComponent<Escape>().targetGameObject = owner.GetComponent<Ship>()._attackingFleet._fleetLeader.gameObject;
-    }
-    public override void Exit() {
-        owner.GetComponent<Escape>().enabled = false;
-        owner.GetComponent<Evasive>().enabled = false;
-    }
-    public override void Think() {
-
-    }
-}
-
-public class SeekingHQ : State {
-    public override void Enter() {
-        owner.GetComponent<Seek>()._target = BattleFieldManager.Instance.GetOpponentHQ(owner.GetComponent<Ship>()._team).transform;
-    }
-    public override void Exit() {
-
-    }
-    public override void Think() {
-
-    }
-}
-
-
 /// <summary>
 /// Following leader of the fleet
 /// </summary>
@@ -86,7 +21,7 @@ public class FollowingLeader : State {
     }
     public override void Think() {
         if (!owner.GetComponent<Figther>().LeaderAlive()) {
-
+            owner.GetComponent<Figther>()._stateMachine.ChangeState(new SearchingForBattle());
         }
     }
 }
@@ -95,8 +30,8 @@ public class Chasing : State {
     public override void Enter() {
         Debug.Log("Entered Chasing State" + owner);
         //owner.GetComponent<Figther>().PickTargetBase();
-        owner.GetComponent<Seek>()._target = owner.GetComponent<Ship>()._targetToFollow.gameObject.transform;
-        owner.GetComponent<Seek>().enabled = true;
+        owner.GetComponent<Arrive>().targetGameObject = owner.GetComponent<Ship>()._targetToFollow.gameObject;
+        owner.GetComponent<Arrive>().enabled = true;
     }
     public override void Exit() {
         Debug.Log("Exited Chasing State State" + owner);
@@ -108,21 +43,6 @@ public class Chasing : State {
     }
 }
 
-
-/// <summary>
-/// Trying to get away from enemy
-/// </summary>
-public class Evading : State {
-    public override void Enter() {
-        owner.GetComponent<Evasive>().enabled = true;
-    }
-    public override void Exit() {
-        owner.GetComponent<Evasive>().enabled = false;
-    }
-    public override void Think() {
-
-    }
-}
 
 /// <summary>
 /// Coming back to leader
@@ -172,26 +92,14 @@ public class FallingBack : State {
 
 
 /// <summary>
-/// Refueling ammo, health and armor
-/// </summary>
-public class Refuelling : State {
-    public override void Enter() {
-
-    }
-    public override void Exit() {
-
-    }
-    public override void Think() {
-
-    }
-}
-
-/// <summary>
 /// Searching for new enemies to fight
 /// </summary>
 public class SearchingForBattle : State {
     public override void Enter() {
         owner.GetComponent<Figther>().SearchForEnemiesToFight();
+        if (!owner.GetComponent<Figther>().LeaderAlive()) {
+            owner.GetComponent<Figther>()._stateMachine.ChangeState(new Escaping());
+        }
     }
     public override void Exit() {
         owner.GetComponent<Figther>().StopSearchForEnemy();
@@ -205,17 +113,4 @@ public class SearchingForBattle : State {
 
 
 
-/// <summary>
-/// Going to enemy base to kill self and be a hero
-/// </summary>
-public class SuicideMission : State {
-    public override void Enter() {
 
-    }
-    public override void Exit() {
-
-    }
-    public override void Think() {
-
-    }
-}

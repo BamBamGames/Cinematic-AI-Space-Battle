@@ -10,7 +10,7 @@ public class Seek : SteeringBehaviour
     public Vector3 target = Vector3.zero;
     Paths path;
     public Transform _target;
-    private bool _followingPath = false;
+    public bool _followingPath = false;
  
 
     private void Start()
@@ -22,6 +22,7 @@ public class Seek : SteeringBehaviour
         } catch {
             _followingPath = false;
             target = _target.position;
+            Debug.Log("someshit");
         }
     }
 
@@ -44,8 +45,18 @@ public class Seek : SteeringBehaviour
     {
         if (_followingPath && Vector3.Distance(transform.position, target) < 2)
         {
-            path.AdvanceToNext();
-            target = path.NextWaypoint();
+            if (gameObject.name == "HQ") {
+
+                GetComponent<Seek>().enabled = false;
+                GetComponent<FollowPath>().enabled = false;
+                this.enabled = false;
+                GetComponent<Boid>().enabled = false;
+            } else {
+
+                path.AdvanceToNext();
+                target = path.NextWaypoint();
+
+            }
         }
     }
 }

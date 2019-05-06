@@ -36,9 +36,12 @@ public abstract class Ship : MonoBehaviour {
     public AudioSource _blasterSource;
 
     public HQScript _hq;
-
+    protected float _blasterForce;
+    protected float _blasterDamage;
     // Use this for initialization
     public void Start() {
+        _blasterForce = BattleSettings.Instance._bulletSpeed;
+        _blasterDamage = BattleSettings.Instance._blasterDamage;
         if (GetComponent<AudioSource>() != null) {
             Destroy(GetComponent<AudioSource>());
         }
@@ -264,8 +267,7 @@ public abstract class Ship : MonoBehaviour {
         }
     }
 
-    protected float _blasterForce = BattleSettings.Instance._bulletSpeed;
-    protected float _blasterDamage = BattleSettings.Instance._blasterDamage;
+    
 
     public void ShootBlaster(float multiplier, Transform enemy) {
         Rigidbody rb;

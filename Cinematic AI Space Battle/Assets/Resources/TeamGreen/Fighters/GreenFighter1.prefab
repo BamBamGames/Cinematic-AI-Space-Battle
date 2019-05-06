@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 114318778102108574}
   - component: {fileID: 65479998033123298}
   - component: {fileID: 82168766427495892}
+  - component: {fileID: 114214200029596910}
   m_Layer: 0
   m_Name: GreenFighter1
   m_TagString: Untagged
@@ -346,6 +347,26 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114214200029596910
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1022700626309204}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de747ec62f7e50346882743cbc1f971a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weight: 0.5
+  force: {x: 0, y: 0, z: 0}
+  boid: {fileID: 0}
+  distance: 15
+  radius: 5
+  jitter: 100
+  evasiveType: 0
+  intervalInSecondsManuever: 10
+  _randomTimeSecsMax: 10
 --- !u!114 &114274055150318312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -357,6 +378,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4795fc9657b3a3f44af323b1a4863e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cameraFollowing: {fileID: 0}
+  _firstPersonCamera: {fileID: 0}
   _blasters: []
   _life: 0
   _armomr: 0
@@ -374,6 +397,7 @@ MonoBehaviour:
   _engineSource: {fileID: 0}
   _explosionSource: {fileID: 0}
   _blasterSource: {fileID: 0}
+  _hq: {fileID: 0}
   _TargetingInterval: 0.5
 --- !u!114 &114318778102108574
 MonoBehaviour:

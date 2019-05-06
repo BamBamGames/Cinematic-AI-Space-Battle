@@ -23,46 +23,21 @@ public class BattleFieldManager : MonoBehaviour {
 	void Start () {
         Instance = this;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        CheckFleetPairState();
-	}
 
-    private void CheckFleetPairState() {
-        foreach (FleetPair pair in _fleetPairs) {
-            if (!pair.IsEngaged()) {
-                if (Vector3.Distance(pair.GetFirstFleet().GetAveragePosition(), pair.GetSecondFleet().GetAveragePosition()) < _distanceBeforeFleetEngage) {
-                    Debug.Log("Fleets engaged:" + pair.GetFirstFleet() + " and " + pair.GetSecondFleet());
-                    pair.Engaged();
-                    InitiateEngagementBetweenFleets(pair);
-                }
-            } else if(pair.IsEngaged()){
-                Fleet first = pair.GetFirstFleet();
-                if (!first._fleeing && first._allShips.Count <= 3) {
-                    first._fleeing = true;
-                    first.StartFleeing();
-                    Debug.Log("Fleet fleeing:" + first);
-                }
+    public Fleet FindNewFleetToJoin(Figther fighter) {
+        Fleet newFleet = null;
+        float _totalHealth = float.MaxValue;
 
-                Fleet second = pair.GetSecondFleet();
-                if (!second._fleeing && second._allShips.Count <= 3) {
-                    second._fleeing = true;
-                    second.StartFleeing();
-                    Debug.Log("Fleet fleeing:" + second);
+        if (fighter._team == Team.red) {
+            foreach (Fleet f in _redFleets) {
+                //Checks if fleet is not in battle
+                if (f._totalHealth < _totalHealth) {
+                    newFleet = f;
                 }
-
             }
         }
-    }
 
-    private void InitiateEngagementBetweenFleets(FleetPair pair) {
-        float fOneFightersCount = pair.GetFirstFleet()._fleetFighters.Count;
-        float fTwoFightersCount = pair.GetSecondFleet()._fleetFighters.Count;
-
-        float minFighers = Mathf.Min(fOneFightersCount, fTwoFightersCount);
-
-        //for(int i = 0; i <)
+        return newFleet;
     }
 
     public Fleet ChooseNewFleet(Leader choosingLeader, bool battleState) {

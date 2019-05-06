@@ -481,7 +481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e0d674c91606e847949625cdc27500f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _blasterPoolSize: 300
+  _blasterPoolSize: 1000
   _missilePoolSize: 200
 --- !u!4 &218196567
 Transform:
@@ -602,6 +602,7 @@ MonoBehaviour:
   _distanceBeforeFleetEngage: 50
   _greenHQ: {fileID: 1203807773}
   _redHQ: {fileID: 330828883}
+  _fleetPairs: []
 --- !u!4 &277518534
 Transform:
   m_ObjectHideFlags: 0
@@ -710,7 +711,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4072192451158968, guid: 89157f54990fb744987f947dfbb5b4ea, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 308
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4072192451158968, guid: 89157f54990fb744987f947dfbb5b4ea, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1914,7 +1915,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1203807773}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -294}
+  m_LocalPosition: {x: 0, y: 0, z: -200}
   m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
   m_Children:
   - {fileID: 80202192}
@@ -2898,7 +2899,7 @@ MonoBehaviour:
   _commanderSpeed: 20
   _bulletSpeed: 1200
   _medicSpeed: 20
-  _blasterDamage: 20
+  _blasterDamage: 10
   _missileDamage: 0
   _medicHealingPower: 0
   _resupplyTime: 0

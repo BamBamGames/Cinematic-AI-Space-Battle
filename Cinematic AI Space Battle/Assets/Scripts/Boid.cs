@@ -59,11 +59,14 @@ public class Boid : MonoBehaviour
 
     public Vector3 ArriveForce(Vector3 target, float slowingDistance)
     {
+        if (Vector3.Distance(transform.position, target) < slowingDistance) {
+
+        }
         Vector3 toTarget = target - transform.position;
 
         float distance = toTarget.magnitude;
         
-        if (distance < 1f)
+        if (distance < slowingDistance)
         {
             return Vector3.zero;
         }
