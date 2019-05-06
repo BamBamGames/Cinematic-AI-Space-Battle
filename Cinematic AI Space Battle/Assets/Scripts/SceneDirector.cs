@@ -139,7 +139,27 @@ public class SceneDirector : MonoBehaviour {
             }
         }
 
-        if (_timer > _introTimeCutOff) {
+         if (_currentScene == Scene.TakeOFF && _timer >= _takeOffTimeCutOff - 10) {
+         
+                if (_screenFadeOutFinished) {
+                    StartScreenFadeOut();
+                }
+
+                if (_screenFadeOutFinished) {
+                    Debug.Log("Next scene");
+                    _currentScene = Scene.Battle;
+                    NextScene();
+                }
+
+            }
+
+        if (_timer > _takeOffTimeCutOff && _currentScene == Scene.TakeOFF) {
+            _currentScene = Scene.Battle;
+            NextScene();
+        }
+
+
+        if (_timer > _introTimeCutOff && _currentScene == Scene.Intro) {
             _currentScene = Scene.TakeOFF;
             NextScene();
         }

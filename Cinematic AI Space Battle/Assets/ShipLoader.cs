@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ShipLoader : MonoBehaviour {
 
+    public int shipLoadCount = 0;
+    public int _maxShipLoadCount = 0;
 	// Use this for initialization
 	void Start () {
 		
@@ -15,8 +17,11 @@ public class ShipLoader : MonoBehaviour {
 	}
 
     private void OnTriggerEnter(Collider other) {
-        if(other.tag == "Ship") {
-            Destroy(other);
-        }
+        shipLoadCount++;
+            if(shipLoadCount >= _maxShipLoadCount) {
+            SecondSceneDirector.Instance.TurnOnTakeOffEffects();
+            }
+            Destroy(other.gameObject);
+            
     }
 }

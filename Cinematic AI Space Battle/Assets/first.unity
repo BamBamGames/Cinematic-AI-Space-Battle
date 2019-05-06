@@ -2559,7 +2559,7 @@ MonoBehaviour:
   _alphaInterval: 0.001
   _timer: 0
   _introTimeCutOff: 62
-  _takeOffTimeCutOff: 0
+  _takeOffTimeCutOff: 121
   _battleCutOff: 0
   _constantCanvas: {fileID: 319403146}
   _currentScene: 0

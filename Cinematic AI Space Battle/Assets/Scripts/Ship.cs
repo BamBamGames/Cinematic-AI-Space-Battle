@@ -133,9 +133,12 @@ public abstract class Ship : MonoBehaviour {
 
     private bool _smoking = false;
     private void ShipSmoke() {
-        GameObject smoke = Instantiate(VFXManager.Instance._shipSmoke);
-        smoke.transform.parent = transform;
-        smoke.transform.localPosition = new Vector3(0, 0, 0);
+        try {
+            GameObject smoke = Instantiate(VFXManager.Instance._shipSmoke);
+            smoke.transform.parent = transform;
+            smoke.transform.localPosition = new Vector3(0, 0, 0);
+        } catch {
+        }
 
     }
 
