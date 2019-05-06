@@ -12,11 +12,17 @@ public class SecondSceneDirector : MonoBehaviour {
     public GameObject _takeOffLight;
     public GameObject _hqShip;
 
+    public AudioClip _anouncment;
+    AudioSource audioSource;
     IEnumerator _shipTakeOff;
 
     public float _lightInterval;
 	// Use this for initialization
 	void Start () {
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = _anouncment;
+        audioSource.volume = 0.7f;
+        audioSource.Play(0);
         Instance = this;
         StartCoroutine(MoveShipLight());
         _shipTakeOff = TakeOff();

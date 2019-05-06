@@ -3583,6 +3583,7 @@ MonoBehaviour:
   _takeOffEffects: {fileID: 1645497224}
   _takeOffLight: {fileID: 888808723}
   _hqShip: {fileID: 2115967789}
+  _anouncment: {fileID: 8300000, guid: 1c12801a0b57adf43bcdc1327fc3e765, type: 3}
   _lightInterval: 0.0001
   _shipTookOff: 0
 --- !u!1 &2115967789

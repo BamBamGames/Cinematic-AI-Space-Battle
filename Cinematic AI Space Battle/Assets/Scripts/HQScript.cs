@@ -16,6 +16,8 @@ public class HQScript : MonoBehaviour {
     public float _minFleetResouces = 5f;
     public float _minMedicResource = 5f;
     public Team team;
+
+    public float _totalPoints = 0;
 	// Use this for initialization
 	void Start () {
         GetSpawnPoints();
@@ -43,6 +45,10 @@ public class HQScript : MonoBehaviour {
                 _fleetSpawner.SpawnFleet(_spawnPoints[Random.Range(0, _spawnPoints.Count)].transform.position, this);
             }
         }
+    }
+
+    public void AddPoints(float points) {
+        _totalPoints += points;
     }
 
     private void GetMainCamera() {

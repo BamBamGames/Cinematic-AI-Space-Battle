@@ -94,6 +94,7 @@ public class Fleet : MonoBehaviour {
     }
 
     public void ChaseFighters(List<Figther> otherFighters) {
+        Debug.Log("CHASING FIGHTERS");
         if (otherFighters.Count < _fleetFighters.Count) {
             int count = 0;
             for (int i = count; i < otherFighters.Count; i++) {

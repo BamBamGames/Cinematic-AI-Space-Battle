@@ -35,13 +35,17 @@ public class Figther : Ship {
 
     IEnumerator SearchForNewFleet() {
         while (true) {
-            if ((_leader = BattleFieldManager.Instance.FindNewFleetToJoin(this)._fleetLeader) == null) {
-                Debug.Log("Could not find new fleet to join keep evading");
-            } else {
-                
-                _targetToFollow = _leader.transform;
-                _stateMachine.ChangeState(new FollowingLeader());
-                StopAllCoroutines();
+            try {
+                if ((_leader = BattleFieldManager.Instance.FindNewFleetToJoin(this)._fleetLeader) == null) {
+                    Debug.Log("Could not find new fleet to join keep evading");
+                } else {
+
+                    _targetToFollow = _leader.transform;
+                    _stateMachine.ChangeState(new FollowingLeader());
+                    StopAllCoroutines();
+                }
+            } catch {
+                Debug.Log("leader is dead");
             }
             yield return new WaitForSeconds(5);
         }

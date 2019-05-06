@@ -12,7 +12,7 @@ public class ShipCamera : MonoBehaviour {
     protected Vector3 _tragetPos;
     protected AudioListener audioListener;
 
-    private float _lerpSpeed = 10f;
+    private float _lerpSpeed = 5f;
 
     public static ShipCamera Create(Vector3 targetPos, Transform target) {
         GameObject go = new GameObject();

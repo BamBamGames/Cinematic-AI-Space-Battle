@@ -33,7 +33,6 @@ public class SceneDirector : MonoBehaviour {
     public enum Scene {
         Intro,
         TakeOFF,
-        FaceOff,
         Battle,
         Outro
     }
@@ -104,7 +103,7 @@ public class SceneDirector : MonoBehaviour {
         while (true) {
             var tempColor = _screenFade.color;
             Debug.Log("Adding Alhpa : " + tempColor.a);
-            tempColor.a = tempColor.a + _alphaChange;
+            tempColor.a = tempColor.a + _alphaChange/2;
             _screenFade.color = tempColor;
             yield return new WaitForSeconds(_alphaInterval);
         }
@@ -116,10 +115,24 @@ public class SceneDirector : MonoBehaviour {
             _timer++;
         }
     }
-	
+
+    private bool _battleFinished = false;
+
 	// Update is called once per frame
 	void Update () {
 
+        if (!_battleFinished && _timer > 320) {
+
+            float redScore = GameObject.FindGameObjectWithTag("RedHQ").GetComponent<HQScript>()._totalPoints;
+            float greenScore = GameObject.FindGameObjectWithTag("GreenHQ").GetComponent<HQScript>()._totalPoints;
+
+            if (redScore > greenScore) {
+                SceneManager.LoadScene("RedWin", LoadSceneMode.Single);
+            } else {
+                SceneManager.LoadScene("GreenWin", LoadSceneMode.Single);
+            }
+            _battleFinished = true;
+        }
 
         if (_currentScene == Scene.Intro && _timer >= _introTimeCutOff - 10) {
 

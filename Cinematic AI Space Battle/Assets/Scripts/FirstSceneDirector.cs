@@ -26,11 +26,22 @@ public class FirstSceneDirector : MonoBehaviour {
 
     public float _timePassed = 0;
 
+    public AudioClip _spottedEnemy;
+    public AudioClip _alienVoice;
+
+    public AudioSource audioSource;
+
     IEnumerator _earthLight;
     IEnumerator _cameraRotation;
     IEnumerator _enableLightning;
 	// Use this for initialization
 	void Start () {
+
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = _spottedEnemy;
+        audioSource.volume = 0.5f;
+        
+
         Instance = this;
         _earthLight = LightRotation();
         StartCoroutine(_earthLight);
@@ -60,6 +71,7 @@ public class FirstSceneDirector : MonoBehaviour {
         }
 
         if (!_endedCameraRotation && _rotateCameraBy <= 0) {
+            audioSource.Play(0);
             Debug.Log("EndedCameraRotation");
             StopCoroutine(_cameraRotation);
           

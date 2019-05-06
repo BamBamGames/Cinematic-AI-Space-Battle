@@ -57,17 +57,10 @@ public abstract class Ship : MonoBehaviour {
         _engineSource.volume = 0.4f;
         _engineSource.rolloffMode = AudioRolloffMode.Linear;
         _engineSource.minDistance = 1f;
-        _engineSource.maxDistance = 15f;
+        _engineSource.maxDistance = 20f;
         _engineSource.Play(0);
 
-        _explosionSource = gameObject.AddComponent<AudioSource>();
-        _explosionSource.loop = false;
-        _explosionSource.clip = AudiSourceManager.Instance._explosion;
-        _explosionSource.spatialBlend = 1f;
-        _explosionSource.volume = 0.8f;
-        _explosionSource.rolloffMode = AudioRolloffMode.Linear;
-        _explosionSource.minDistance = 1f;
-        _explosionSource.maxDistance = 400f;
+        
 
         _blasterSource = gameObject.AddComponent<AudioSource>();
         _blasterSource.loop = false;
@@ -76,7 +69,7 @@ public abstract class Ship : MonoBehaviour {
         _blasterSource.volume = 0.4f;
         _blasterSource.rolloffMode = AudioRolloffMode.Linear;
         _blasterSource.minDistance = 1f;
-        _blasterSource.maxDistance = 20f;
+        _blasterSource.maxDistance = 23f;
 
         GetBlasters();
         SetShipStats();
@@ -153,7 +146,19 @@ public abstract class Ship : MonoBehaviour {
         GameObject smoke = Instantiate(VFXManager.Instance._shipExplosion);
         //smoke.transform.parent = transform;
         smoke.transform.position = transform.position;
-        _explosionSource.Play(0);
+        GameObject explosionTemp = new GameObject();
+        AudioSource explosionSource = explosionTemp.AddComponent<AudioSource>();
+
+        explosionSource = gameObject.AddComponent<AudioSource>();
+        explosionSource.loop = false;
+        explosionSource.clip = AudiSourceManager.Instance._explosion;
+        explosionSource.spatialBlend = 1f;
+        explosionSource.volume = 1f;
+        explosionSource.rolloffMode = AudioRolloffMode.Linear;
+        explosionSource.minDistance = 1f;
+        explosionSource.maxDistance = 100f;
+        explosionSource.Play(0);
+        Destroy(explosionTemp, 2);
     }
 
 
@@ -281,6 +286,7 @@ public abstract class Ship : MonoBehaviour {
             bullet.SetActive(true);
 
             Bullet b = bullet.GetComponent<Bullet>();
+            b._owner = this.gameObject;
             b.SetDamage(_blasterDamage * multiplier);
 
             if (_team == Team.red) {

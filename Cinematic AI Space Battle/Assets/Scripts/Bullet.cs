@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour {
 
     IEnumerator _bulletTimeOutRoutine;
     private float _damage = 0;
+    public GameObject _owner;
 	// Use this for initialization
 	void Start () {
         
@@ -32,6 +33,9 @@ public class Bullet : MonoBehaviour {
     }
 
     public float GetDamage() {
+        if (_owner != null) {
+            _owner.GetComponent<Ship>()._hq.AddPoints(1f);
+        }
         return _damage;
     }
 

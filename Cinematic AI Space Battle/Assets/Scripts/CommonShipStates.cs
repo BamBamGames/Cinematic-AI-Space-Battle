@@ -35,19 +35,28 @@ public class DecidingRole : State {
 
 public class Escaping : State {
     public override void Enter() {
-        Debug.Log("Entered Escaping State" + owner);
-        owner.GetComponent<Evasive>().enabled = true;
-        owner.GetComponent<Escape>().enabled = true;
-        owner.GetComponent<Escape>().weight = 0.1f;
-        owner.GetComponent<Evasive>().weight = 0.8f;
-        owner.GetComponent<Evasive>().radius = 20f;
-        owner.GetComponent<Boid>().maxSpeed = owner.GetComponent<Ship>()._maxSpeed * 0.5f;
-        owner.GetComponent<Evasive>().StartEvasiveManuevers(8);
-        owner.GetComponent<Escape>().targetGameObject = owner.GetComponent<Ship>()._attackingFleet._fleetLeader.gameObject;
+
+        try {
+            Debug.Log("Entered Escaping State" + owner);
+            owner.GetComponent<Evasive>().enabled = true;
+            owner.GetComponent<Escape>().enabled = true;
+            owner.GetComponent<Escape>().weight = 0.1f;
+            owner.GetComponent<Evasive>().weight = 0.8f;
+            owner.GetComponent<Evasive>().radius = 20f;
+            owner.GetComponent<Boid>().maxSpeed = owner.GetComponent<Ship>()._maxSpeed * 0.5f;
+            owner.GetComponent<Evasive>().StartEvasiveManuevers(8);
+            owner.GetComponent<Escape>().targetGameObject = owner.GetComponent<Ship>()._attackingFleet._fleetLeader.gameObject;
+        } catch {
+            Debug.Log("Owner is dead");
+        }
     }
     public override void Exit() {
-        owner.GetComponent<Escape>().enabled = false;
-        owner.GetComponent<Evasive>().enabled = false;
+        try {
+            owner.GetComponent<Escape>().enabled = false;
+            owner.GetComponent<Evasive>().enabled = false;
+        } catch {
+            Debug.Log("Owner is dead");
+        }
     }
     public override void Think() {
 

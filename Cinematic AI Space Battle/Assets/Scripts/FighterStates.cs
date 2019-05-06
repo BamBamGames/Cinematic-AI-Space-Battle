@@ -30,8 +30,12 @@ public class Chasing : State {
     public override void Enter() {
         Debug.Log("Entered Chasing State" + owner);
         //owner.GetComponent<Figther>().PickTargetBase();
-        owner.GetComponent<Arrive>().targetGameObject = owner.GetComponent<Ship>()._targetToFollow.gameObject;
-        owner.GetComponent<Arrive>().enabled = true;
+        try {
+            owner.GetComponent<Arrive>().targetGameObject = owner.GetComponent<Ship>()._targetToFollow.gameObject;
+            owner.GetComponent<Arrive>().enabled = true;
+        } catch {
+            Debug.Log("owner is dead");
+        }
     }
     public override void Exit() {
         Debug.Log("Exited Chasing State State" + owner);
@@ -96,6 +100,7 @@ public class FallingBack : State {
 /// </summary>
 public class SearchingForBattle : State {
     public override void Enter() {
+        Debug.Log("Leader Alive");
         owner.GetComponent<Figther>().SearchForEnemiesToFight();
         if (!owner.GetComponent<Figther>().LeaderAlive()) {
             owner.GetComponent<Figther>()._stateMachine.ChangeState(new Escaping());

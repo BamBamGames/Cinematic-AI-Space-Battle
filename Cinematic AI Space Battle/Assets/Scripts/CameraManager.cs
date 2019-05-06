@@ -6,6 +6,7 @@ using UnityEngine.PostProcessing;
 public class CameraManager : MonoBehaviour {
 
     public List<Camera> _cameras = new List<Camera>();
+    public List<Camera> _battleCameras = new List<Camera>();
     public Camera _enabled = null;
     public bool _startFromPResetCamera = false;
     public filmTypes _filmType = filmTypes.firstCamera;
@@ -84,6 +85,13 @@ public class CameraManager : MonoBehaviour {
                 cam.gameObject.SetActive(false);
             }
         }
+
+        foreach (Camera cam in _battleCameras) {
+            if (!cam.Equals(_enabled)) {
+
+                cam.gameObject.SetActive(false);
+            }
+        }
     }
 
     public void SwitchRandomCamera() {
@@ -91,8 +99,17 @@ public class CameraManager : MonoBehaviour {
             _enabled.gameObject.SetActive(false);
         } catch {
         }
-        _enabled = _cameras[Random.Range(0, _cameras.Count)];
-        _enabled.gameObject.SetActive(true);
+
+        if (Random.Range(0, 8) < 6) {
+            _enabled = _cameras[Random.Range(0, _cameras.Count)];
+            _enabled.gameObject.SetActive(true);
+        } else if(_battleCameras.Count > 0){
+            _enabled = _battleCameras[Random.Range(0, _battleCameras.Count)];
+            _enabled.gameObject.SetActive(true);
+        } else {
+            _enabled = _cameras[Random.Range(0, _cameras.Count)];
+            _enabled.gameObject.SetActive(true);
+        }
         DisableAllButEnalbed();
     }
 
@@ -105,5 +122,14 @@ public class CameraManager : MonoBehaviour {
     public void AddCamera(Camera cam) {
         _cameras.Add(cam);
         DisableAllButEnalbed();
+    }
+
+    public void AddBattleCamera(Camera cam) {
+        _battleCameras.Add(cam);
+        DisableAllButEnalbed();
+    }
+
+    public void RemoveBattleCamera(Camera cam) {
+        _battleCameras.Remove(cam);
     }
 }

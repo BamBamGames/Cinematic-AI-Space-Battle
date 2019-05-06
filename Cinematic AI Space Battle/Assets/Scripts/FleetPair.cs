@@ -4,18 +4,54 @@ using UnityEngine;
 
 public class FleetPair : MonoBehaviour{
 
-    protected Fleet _pair1;
-    protected Fleet _pair2;
+    public  Fleet _pair1;
+    public  Fleet _pair2;
     protected bool _engaged = false;
     private float _minDistanceBeforeEngagment = 50f;
     public StateMachine _stateMachine;
+    public Camera _battleCamera;
+    public float _timeSinceCreation = 0;
 
     private void Start() {
+        StartCoroutine(Timer());
         _stateMachine = gameObject.AddComponent<StateMachine>();
+        GameObject go = new GameObject();
+        _battleCamera = go.AddComponent<Camera>();
+        go.AddComponent<AudioListener>();
+        CameraManager.Instance.AddBattleCamera(_battleCamera);
     }
+
+    private bool _addedBattledCamera = false;
 
     public void Update() {
         UpdatePairStatus();
+        if (!_addedBattledCamera && _timeSinceCreation > 5) {
+            CameraManager.Instance.AddBattleCamera(_battleCamera);
+            _addedBattledCamera = true;
+        }
+    }
+
+    private void LateUpdate() {
+        UpdateFightPostion();
+    }
+
+    IEnumerator Timer() {
+        while (true) {
+            yield return new WaitForSecondsRealtime(1f);
+            _timeSinceCreation += 1;
+        }
+    }
+
+    Vector3 _middleOfFight;
+
+    private void UpdateFightPostion() {
+        _middleOfFight = new Vector3((_pair1.GetAveragePosition().x + _pair2.GetAveragePosition().x) / 2,
+            (_pair1.GetAveragePosition().y + _pair2.GetAveragePosition().y) / 2,
+        (_pair1.GetAveragePosition().z + _pair2.GetAveragePosition().z) / 2);
+        transform.localPosition = _middleOfFight;
+        
+        _battleCamera.transform.position = _middleOfFight + transform.right * 40f;
+        _battleCamera.gameObject.transform.LookAt(transform);
     }
 
     public void UpdatePairStatus() {
@@ -23,12 +59,26 @@ public class FleetPair : MonoBehaviour{
             if (Vector3.Distance(_pair1.GetAveragePosition(), _pair2.GetAveragePosition()) < _minDistanceBeforeEngagment) {
                 Debug.Log("Fleets engaged:" + _pair1 + " and " + _pair2);
                 _engaged = true;
+                _stateMachine.ChangeState(new ScrambleFight());
                 StartCoroutine(ChangeFightBehaviours());
                 //InitiateEngagementBetweenFleets(pair);
             }
         } else if (_engaged) {
             Fleet first = _pair1;
             Fleet second = _pair2;
+
+
+
+            if (first == null) {
+                return;
+            }
+
+            if (second == null) {
+                return;
+            }
+
+
+
 
             if (!first._fleeing && first._allShips.Count <= 3) {
                 first._fleeing = true;
@@ -47,6 +97,9 @@ public class FleetPair : MonoBehaviour{
                 Debug.Log("Fleet fleeing:" + second);
             }
         }
+
+        
+
     }
 
     public static FleetPair Create(Fleet first, Fleet second) {

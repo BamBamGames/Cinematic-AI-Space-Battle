@@ -621,7 +621,7 @@ MonoBehaviour:
   force: {x: 0, y: 0, z: 0}
   boid: {fileID: 0}
   distance: 15
-  radius: 5
+  radius: 2
   jitter: 100
   evasiveType: 0
   intervalInSecondsManuever: 10
@@ -642,3 +642,4 @@ MonoBehaviour:
   boid: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
   _target: {fileID: 0}
+  _followingPath: 0

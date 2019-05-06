@@ -65,7 +65,7 @@ public class Leader : Ship {
     }
 
     protected override void SetShipStats() {
-        _life = 500;
+        _life = 600;
         _armomr = 200f;
         _fuel = 250;
         _primaryAmmo = 250f;

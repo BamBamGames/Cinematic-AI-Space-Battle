@@ -16,7 +16,7 @@ public class EscapeFight : State {
     }
     public override void Think() {
         
-
+        
         FleetPair pair = owner.GetComponent<FleetPair>();
 
         if (pair.GetFirstFleet()._fleetLeader == null) {
@@ -41,29 +41,64 @@ public class EscapeFight : State {
         owner.GetComponent<StateMachine>().ChangeState(new Seperation());
 
         if (Vector3.Distance(pair._escaping.GetAveragePosition(), pair._chasing.GetAveragePosition()) > 30) {
-            pair._escaping._fleetLeader.GetComponent<Boid>().maxSpeed -= 0.01f;
+            try {
+                pair._escaping._fleetLeader.GetComponent<Boid>().maxSpeed -= 0.01f;
+            } catch {
+                Debug.Log("Leader is dead");
+            }
             
         } else {
-            if (pair._escaping._fleetLeader.GetComponent<Boid>().maxSpeed < pair._escaping._fleetLeader._maxSpeed) {
-                try {
-                    pair._escaping._fleetLeader.GetComponent<Boid>().maxSpeed = pair._escaping.GetComponent<Ship>()._maxSpeed * 0.4f;
-                } catch {
+            try {
+                if (pair._escaping._fleetLeader.GetComponent<Boid>().maxSpeed < pair._escaping._fleetLeader._maxSpeed) {
+                    try {
+                        pair._escaping._fleetLeader.GetComponent<Boid>().maxSpeed = pair._escaping.GetComponent<Ship>()._maxSpeed * 0.4f;
+                    } catch {
+                    }
                 }
+
+                pair._chasing._fleetLeader.GetComponent<Boid>().maxSpeed = pair._chasing._fleetLeader._maxSpeed;
+            } catch {
+                Debug.Log("Leader is dead");
             }
-            pair._chasing._fleetLeader.GetComponent<Boid>().maxSpeed = pair._chasing._fleetLeader._maxSpeed;
         }
+        
     }
+    
 }
 
 
 public class ScrambleFight : State {
     public override void Enter() {
+
     }
 
     public override void Exit() {
 
     }
+
     public override void Think() {
+
+         
+        FleetPair pair = owner.GetComponent<FleetPair>();
+
+        if (pair.GetFirstFleet()._fleetLeader == null) {
+            foreach (Figther f in pair.GetFirstFleet()._fleetFighters) {
+                f._stateMachine.ChangeState(new SearchingForBattle());
+               
+            }
+        } else if(pair.GetSecondFleet()._fleetLeader == null) {
+            pair.GetFirstFleet().ChaseFighters((pair.GetSecondFleet()._fleetFighters));
+            pair.GetFirstFleet()._fleetLeader.GetRandomTarget(pair.GetSecondFleet()._fleetFighters);
+        }
+
+        if (pair.GetSecondFleet()._fleetLeader == null) {
+            foreach (Figther f in pair.GetFirstFleet()._fleetFighters) {
+                f._stateMachine.ChangeState(new SearchingForBattle());
+            }
+        } else if (pair.GetFirstFleet()._fleetLeader == null) {
+            pair.GetSecondFleet().ChaseFighters((pair.GetFirstFleet()._fleetFighters));
+            pair.GetSecondFleet()._fleetLeader.GetRandomTarget(pair.GetFirstFleet()._fleetFighters);
+        }
 
     }
 }

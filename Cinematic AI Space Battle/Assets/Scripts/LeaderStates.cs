@@ -12,7 +12,9 @@ public class ChasingFleet : State {
     public override void Exit() {
         Debug.Log("Exited Travelling State" + owner);
         //owner.GetComponent<Figther>().PickTargetBase();
-        owner.GetComponent<Seek>().enabled = false;
+        if (owner != null) {
+            owner.GetComponent<Seek>().enabled = false;
+        }
     }
     public override void Think() {
 

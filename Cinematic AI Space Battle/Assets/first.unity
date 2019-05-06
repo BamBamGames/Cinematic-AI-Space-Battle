@@ -572,6 +572,9 @@ MonoBehaviour:
   _rotateLightBy: 170
   _rotateCameraBy: 40
   _timePassed: 0
+  _spottedEnemy: {fileID: 8300000, guid: f18939ad5db93a0458da938e4acbf320, type: 3}
+  _alienVoice: {fileID: 0}
+  audioSource: {fileID: 0}
   _endedLightRotation: 0
   _endedCameraRotation: 0
   _cameraMoving: 0
